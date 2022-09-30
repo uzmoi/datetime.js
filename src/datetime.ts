@@ -1,3 +1,5 @@
+import { DateTimeRange } from "./duration";
+
 export interface IDate {
     year: number;
     month: number;
@@ -14,6 +16,18 @@ export interface ITime {
 export interface IDateTime extends IDate, ITime {}
 
 export class DateTime implements IDateTime {
+    static range(
+        start: DateTime | string | number | Date,
+        end: DateTime | string | number | Date,
+    ): DateTimeRange {
+        if(!(start instanceof DateTime)) {
+            start = DateTime.from(start);
+        }
+        if(!(end instanceof DateTime)) {
+            end = DateTime.from(end);
+        }
+        return new DateTimeRange(start, end);
+    }
     static from(source: string | number | Date): DateTime {
         if(typeof source === "string" || typeof source === "number") {
             source = new Date(source);

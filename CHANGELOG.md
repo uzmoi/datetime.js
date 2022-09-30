@@ -19,3 +19,6 @@
 - `minutesInHour` constant
 - `secondsInMinute` constant
 - `millisInSecond` constant
+- `IDuration` type
+- `DateTimeRange` class
+- `DateTime.range` function
