@@ -137,6 +137,34 @@ export class DateTime implements IDateTime {
             millisecond: this.millisecond + (dur.milliseconds ?? 0),
         });
     }
+    startOf(key: Exclude<keyof IDateTime, "offset" | "millisecond"> | "week"): DateTime {
+        const dt: Partial<IDateTime> = { millisecond: 0 };
+        if(key === "week") {
+            dt.day = this.day - weekday(this);
+            key = "day";
+        }
+        block: {
+            if(key === "second") break block;
+            dt.second = 0;
+            if(key === "minute") break block;
+            dt.minute = 0;
+            if(key === "hour") break block;
+            dt.hour = 0;
+            if(key === "day") break block;
+            dt.day = 1;
+            if(key === "month") break block;
+            dt.month = 1;
+        }
+        return this.with(dt);
+    }
+    endOf(key: Exclude<keyof IDateTime, "offset" | "millisecond"> | "week") {
+        const start = this.startOf(key);
+        if(key === "week") {
+            return start.plus({ days: 7, milliseconds: -1 });
+        } else {
+            return start.plus({ [key + "s"]: 1, milliseconds: -1 });
+        }
+    }
 }
 
 export type WeekdayFullString = `${typeof weekDayStringArray[number]}day`;

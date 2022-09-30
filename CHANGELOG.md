@@ -10,6 +10,8 @@
 - `DateTime.now` function
 - `DateTime.prototype.with` function
 - `DateTime.prototype.plus` function
+- `DateTime.prototype.startOf` function
+- `DateTime.prototype.endOf` function
 - `WeekdayFullString` type
 - `WeekdayString` type
 - `weekdayString` function
