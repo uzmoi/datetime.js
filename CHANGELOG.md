@@ -7,6 +7,11 @@
 - `IDateTime` type
 - `DateTime` class
 - `DateTime.from` function
+- `WeekdayFullString` type
+- `WeekdayString` type
+- `weekdayString` function
+- `Weekday` type
+- `weekday` function
 - `yearday` function
 - `isLeapYear` function
 - `leapDays` function

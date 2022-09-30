@@ -58,6 +58,29 @@ export class DateTime implements IDateTime {
     ) {}
 }
 
+export type WeekdayFullString = `${typeof weekDayStringArray[number]}day`;
+export type WeekdayString = "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat";
+
+const weekDayStringArray = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"] as const;
+
+export const weekdayString: {
+    (date: IDate, full: true): WeekdayFullString;
+    (date: IDate, full?: false): WeekdayString;
+} = (date: IDate, full = false): never => {
+    const base = weekDayStringArray[weekday(date)];
+    const result: WeekdayString | WeekdayFullString = (
+        full ? `${base}day` : base.slice(0, 3) as WeekdayString
+    );
+    return result as never;
+};
+
+export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+export const weekday = (date: IDate): Weekday => {
+    const dayFromUnixEpoc = date.year + leapDays(date.year - 1) + yearday(date);
+    return dayFromUnixEpoc % daysInWeek as Weekday;
+};
+
 export const yearday = (date: IDate): number => {
     // this.month が
     //   1 ならば 13
