@@ -6,3 +6,5 @@
 - `ITime` type
 - `IDateTime` type
 - `DateTime` class
+- `isLeapYear` function
+- `leapDays` function

@@ -24,3 +24,11 @@ export class DateTime implements IDateTime {
         readonly millisecond: number,
     ) {}
 }
+
+export const isLeapYear = (year: number): boolean => {
+    return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+};
+
+export const leapDays = (year: number): number => {
+    return (year / 4 | 0) - (year / 100 | 0) + (year / 400 | 0);
+};
