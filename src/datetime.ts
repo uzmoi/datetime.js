@@ -1,3 +1,4 @@
+import { modulo } from "emnorst";
 import { DateTimeRange } from "./duration";
 
 export interface IDate {
@@ -6,6 +7,29 @@ export interface IDate {
     day: number;
 }
 
+export const normalizeDate = (date: IDate): IDate => {
+    let day = date.day;
+    let month = modulo(date.month, monthsInYear) || monthsInYear;
+    let year = date.year + Math.floor((date.month - 1) / monthsInYear);
+    while(day > daysInMonth(year, month)) {
+        day -= daysInMonth(year, month);
+        month++;
+        if(month > monthsInYear) {
+            month = 1;
+            year++;
+        }
+    }
+    while(day <= 0) {
+        month--;
+        if(month < 1) {
+            month = monthsInYear;
+            year--;
+        }
+        day += daysInMonth(year, month);
+    }
+    return { day, month, year };
+};
+
 export interface ITime {
     hour: number;
     minute: number;
@@ -13,7 +37,39 @@ export interface ITime {
     millisecond: number;
 }
 
+export const normalizeTime = (time: ITime): ITime => {
+    const millisecond = time.millisecond;
+    const second = time.second + Math.floor(millisecond / millisInSecond);
+    const minute = time.minute + Math.floor(second / secondsInMinute);
+    const hour = time.hour + Math.floor(minute / minutesInHour);
+    return {
+        hour,
+        minute: modulo(minute, minutesInHour),
+        second: modulo(second, secondsInMinute),
+        millisecond: modulo(millisecond, millisInSecond),
+    };
+};
+
 export interface IDateTime extends IDate, ITime {}
+
+const normalizeDateTime = (dt: IDateTime) => {
+    const time = normalizeTime(dt);
+    const date = normalizeDate({
+        day: dt.day + Math.floor(time.hour / hoursInDay),
+        month: dt.month,
+        year: dt.year,
+    });
+    // @ts-expect-error
+    return new DateTime(
+        date.year,
+        date.month,
+        date.day,
+        modulo(time.hour, hoursInDay),
+        time.minute,
+        time.second,
+        time.millisecond,
+    );
+};
 
 export class DateTime implements IDateTime {
     static range(
