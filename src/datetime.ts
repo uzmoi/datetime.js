@@ -28,6 +28,9 @@ export class DateTime implements IDateTime {
         }
         return new DateTimeRange(start, end);
     }
+    static now(): DateTime {
+        return DateTime.from(Date.now());
+    }
     static from(source: string | number | Date): DateTime {
         if(typeof source === "string" || typeof source === "number") {
             source = new Date(source);

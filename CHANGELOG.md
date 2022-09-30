@@ -7,6 +7,7 @@
 - `IDateTime` type
 - `DateTime` class
 - `DateTime.from` function
+- `DateTime.now` function
 - `WeekdayFullString` type
 - `WeekdayString` type
 - `weekdayString` function
