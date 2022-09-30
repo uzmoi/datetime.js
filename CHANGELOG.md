@@ -8,6 +8,8 @@
 - `DateTime` class
 - `DateTime.from` function
 - `DateTime.now` function
+- `DateTime.prototype.with` function
+- `DateTime.prototype.plus` function
 - `WeekdayFullString` type
 - `WeekdayString` type
 - `weekdayString` function

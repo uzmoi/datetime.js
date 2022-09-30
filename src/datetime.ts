@@ -1,5 +1,5 @@
 import { modulo } from "emnorst";
-import { DateTimeRange } from "./duration";
+import { DateTimeRange, IDuration } from "./duration";
 
 export interface IDate {
     year: number;
@@ -115,6 +115,28 @@ export class DateTime implements IDateTime {
         readonly second: number,
         readonly millisecond: number,
     ) {}
+    with(dt: Partial<IDateTime>): DateTime {
+        return normalizeDateTime({
+            year:        dt.year        ?? this.year,
+            month:       dt.month       ?? this.month,
+            day:         dt.day         ?? this.day,
+            hour:        dt.hour        ?? this.hour,
+            minute:      dt.minute      ?? this.minute,
+            second:      dt.second      ?? this.second,
+            millisecond: dt.millisecond ?? this.millisecond,
+        });
+    }
+    plus(dur: Partial<IDuration>): DateTime {
+        return normalizeDateTime({
+            year:        this.year        + (dur.years        ?? 0),
+            month:       this.month       + (dur.months       ?? 0),
+            day:         this.day         + (dur.days         ?? 0),
+            hour:        this.hour        + (dur.hours        ?? 0),
+            minute:      this.minute      + (dur.minutes      ?? 0),
+            second:      this.second      + (dur.seconds      ?? 0),
+            millisecond: this.millisecond + (dur.milliseconds ?? 0),
+        });
+    }
 }
 
 export type WeekdayFullString = `${typeof weekDayStringArray[number]}day`;
