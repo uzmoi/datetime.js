@@ -6,6 +6,7 @@
 - `ITime` type
 - `IDateTime` type
 - `DateTime` class
+- `DateTime.from` function
 - `yearday` function
 - `isLeapYear` function
 - `leapDays` function

@@ -14,6 +14,25 @@ export interface ITime {
 export interface IDateTime extends IDate, ITime {}
 
 export class DateTime implements IDateTime {
+    static from(source: string | number | Date): DateTime {
+        if(typeof source === "string" || typeof source === "number") {
+            source = new Date(source);
+        }
+        if(source instanceof Date) {
+            return new DateTime(
+                source.getUTCFullYear(),
+                source.getUTCMonth() + 1,
+                source.getUTCDate(),
+                source.getUTCHours(),
+                source.getUTCMinutes(),
+                source.getUTCSeconds(),
+                source.getUTCMilliseconds(),
+            );
+        }
+        // @ts-expect-error
+        const _: never = source;
+        throw new TypeError("unknown source type.");
+    }
     private constructor(
         readonly year: number,
         readonly month: number,
