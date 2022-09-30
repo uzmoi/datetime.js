@@ -6,6 +6,7 @@
 - `ITime` type
 - `IDateTime` type
 - `DateTime` class
+- `yearday` function
 - `isLeapYear` function
 - `leapDays` function
 - `monthsInYear` constant
