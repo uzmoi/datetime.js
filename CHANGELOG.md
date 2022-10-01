@@ -32,3 +32,4 @@
 - `IDuration` type
 - `DateTimeRange` class
 - `DateTime.range` function
+- `DateTimeRange.prototype.to` function
