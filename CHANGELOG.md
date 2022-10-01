@@ -8,6 +8,7 @@
 - `DateTime` class
 - `DateTime.from` function
 - `DateTime.now` function
+- `DateTime.prototype.toString` function
 - `DateTime.prototype.with` function
 - `DateTime.prototype.plus` function
 - `DateTime.prototype.startOf` function

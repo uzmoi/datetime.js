@@ -1,5 +1,6 @@
 import { modulo } from "emnorst";
 import { DateTimeRange, IDuration } from "./duration";
+import { dateToString, timeToString } from "./string";
 
 export interface IDate {
     year: number;
@@ -115,6 +116,12 @@ export class DateTime implements IDateTime {
         readonly second: number,
         readonly millisecond: number,
     ) {}
+    /**
+     * @returns "YYYY-MM-DDThh:mm:ss.nnn"
+     */
+    toString(): string {
+        return dateToString(this) + "T" + timeToString(this);
+    }
     with(dt: Partial<IDateTime>): DateTime {
         return normalizeDateTime({
             year:        dt.year        ?? this.year,
