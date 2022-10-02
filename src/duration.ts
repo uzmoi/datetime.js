@@ -1,5 +1,15 @@
 import { assert } from "emnorst";
-import { DateTime, daysInYear, leapDays, yearday } from "./datetime";
+import {
+    DateTime,
+    daysInYear,
+    hoursInDay,
+    leapDays,
+    millisInSecond,
+    minutesInHour,
+    monthsInYear,
+    secondsInMinute,
+    yearday,
+} from "./datetime";
 
 export interface IDuration {
     years: number;
@@ -36,7 +46,7 @@ export class DateTimeRange implements IDuration {
             return this.years;
         }
         if(key === "months") {
-            return this.years * 12 + this.months;
+            return this.years * monthsInYear + this.months;
         }
         const days = this.years * daysInYear
             + leapDays(this.end.year) - leapDays(this.start.year)
@@ -44,20 +54,20 @@ export class DateTimeRange implements IDuration {
         if(key === "days") {
             return days;
         }
-        const hours = days * 24 + this.hours;
+        const hours = days * hoursInDay + this.hours;
         if(key === "hours") {
             return hours;
         }
-        const minutes = hours * 60 + this.minutes;
+        const minutes = hours * minutesInHour + this.minutes;
         if(key === "minutes") {
             return minutes;
         }
-        const seconds = minutes * 60 + this.seconds;
+        const seconds = minutes * secondsInMinute + this.seconds;
         if(key === "seconds") {
             return seconds;
         }
         if(key === "milliseconds") {
-            return seconds * 1000 + this.milliseconds;
+            return seconds * millisInSecond + this.milliseconds;
         }
         assert.unreachable();
     }
