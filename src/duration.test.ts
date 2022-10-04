@@ -21,19 +21,20 @@ describe("DateTimeRange", () => {
         seconds:      4,
         milliseconds: 999,
     };
-    const dt = DateTime.from("2022-11-07T01:23:45.678Z");
-    test("new", () => {
-        const range = new DateTimeRange(dt, dt.plus(plus));
-        expect({ ...range }).toEqual({
-            ...plus,
-            start: dt,
-            end: dt.plus(plus),
-        });
+    const start = DateTime.from("2022-11-07T01:23:45.678Z");
+    test.each<IDuration>([
+        plus,
+        { years: 2, months: 1, days: 30, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 },
+        { years: 5, months: 2, days: 27, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 },
+        { years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 },
+    ])("new %j", dur => {
+        const range = new DateTimeRange(start, start.plus(dur));
+        expect({ ...range }).toEqual({ ...dur, start, end: start.plus(dur) });
     });
     {
         const expectedDays = plus.years * daysInYear
-            + daysInMonth(dt.year + plus.years, dt.month + 1)
-            + daysInMonth(dt.year + plus.years + 1, (dt.month + 2) % monthsInYear);
+            + daysInMonth(start.year + plus.years, start.month + 1)
+            + daysInMonth(start.year + plus.years + 1, (start.month + 2) % monthsInYear);
         test.each([
             ["years",  plus.years],
             ["months", plus.years * monthsInYear + plus.months],
@@ -46,7 +47,7 @@ describe("DateTimeRange", () => {
             ] as const).reduce((prev, [rate, value]) => prev * rate + value, expectedDays)],
             // ["weeks", Math.floor(expectedDays / daysInWeek)],
         ] as const)(".to('%s')", (key, expected) => {
-            const range = DateTime.range(dt, dt.plus(plus));
+            const range = DateTime.range(start, start.plus(plus));
             expect(range.to(key)).toBe(expected);
         });
     }
