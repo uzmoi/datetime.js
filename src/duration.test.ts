@@ -51,7 +51,8 @@ describe("DateTimeRange", () => {
         });
     }
     test("(unixEpoch..now).to('milliseconds') === Date.now()", () => {
-        const rangeFromUnixEpochToNow = DateTime.range("1970-01-01T00:00:00.000Z", DateTime.now());
-        expect(rangeFromUnixEpochToNow.to("milliseconds")).toBe(Date.now());
+        const now = Date.now();
+        const rangeFromUnixEpochToNow = DateTime.range("1970-01-01T00:00:00.000Z", now);
+        expect(rangeFromUnixEpochToNow.to("milliseconds")).toBe(now);
     });
 });
