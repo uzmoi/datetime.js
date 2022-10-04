@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { DateTime, yearday } from "./datetime";
+import { DateTime, isLeapYear, yearday } from "./datetime";
 
 describe("DateTime", () => {
     test(".toString()", () => {
@@ -16,6 +16,12 @@ describe("DateTime", () => {
             milliseconds: 678,
         });
         expect(dt).toEqual(DateTime.from("2022-11-07T01:23:45.678Z"));
+    });
+    test("plus order", () => {
+        const base = DateTime.from("2022-01-01T00:00:00.000Z");
+        const dt = base.plus({ years: 2 }).plus({ days: 60 });
+        expect(isLeapYear(dt.year)).toBe(true);
+        expect(base.plus({ years: 2, days: 60 })).toEqual(dt);
     });
     test.each([
         ["year",   "2022-01-01T00:00:00.000Z"],
