@@ -1,12 +1,14 @@
-import { assert } from "emnorst";
+import { assert, modulo } from "emnorst";
 import {
     DateTime,
+    daysInMonth,
     daysInYear,
     hoursInDay,
     leapDays,
     millisInSecond,
     minutesInHour,
     monthsInYear,
+    normalizeTime,
     secondsInMinute,
     yearday,
 } from "./datetime";
@@ -33,13 +35,35 @@ export class DateTimeRange implements IDuration {
         readonly start: DateTime,
         readonly end: DateTime,
     ) {
-        this.years        = end.year        - start.year;
-        this.months       = end.month       - start.month;
-        this.days         = end.day         - start.day;
-        this.hours        = end.hour        - start.hour;
-        this.minutes      = end.minute      - start.minute;
-        this.seconds      = end.second      - start.second;
-        this.milliseconds = end.millisecond - start.millisecond;
+        const time = normalizeTime({
+            hour:        end.hour        - start.hour,
+            minute:      end.minute      - start.minute,
+            second:      end.second      - start.second,
+            millisecond: end.millisecond - start.millisecond,
+        });
+        let days = end.day - start.day + Math.floor(time.hour / hoursInDay);
+        let months = (end.year - start.year) * monthsInYear + end.month - start.month;
+
+        const daysInCurrentMonth = () => daysInMonth(
+            start.year + Math.floor((start.month + months + 1) / monthsInYear),
+            ((start.month + months) % monthsInYear) || monthsInYear,
+        );
+
+        while(days > daysInCurrentMonth()) {
+            days -= daysInCurrentMonth();
+            months++;
+        }
+        while(days < 0) {
+            months--;
+            days += daysInCurrentMonth();
+        }
+        this.years        = Math.floor(months / monthsInYear);
+        this.months       = months % monthsInYear;
+        this.days         = days;
+        this.hours        = modulo(time.hour, hoursInDay);
+        this.minutes      = time.minute;
+        this.seconds      = time.second;
+        this.milliseconds = time.millisecond;
     }
     to(key: keyof IDuration): number {
         if(key === "years") {
