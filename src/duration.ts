@@ -93,6 +93,6 @@ export class DateTimeRange implements IDuration {
         if(key === "milliseconds") {
             return seconds * millisInSecond + this.milliseconds;
         }
-        assert.unreachable();
+        assert.unreachable<typeof key>();
     }
 }
