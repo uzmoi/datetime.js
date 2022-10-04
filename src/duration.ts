@@ -44,10 +44,13 @@ export class DateTimeRange implements IDuration {
         let days = end.day - start.day + Math.floor(time.hour / hoursInDay);
         let months = (end.year - start.year) * monthsInYear + end.month - start.month;
 
-        const daysInCurrentMonth = () => daysInMonth(
-            start.year + Math.floor((start.month + months + 1) / monthsInYear),
-            ((start.month + months) % monthsInYear) || monthsInYear,
-        );
+        const daysInCurrentMonth = () => {
+            const m = start.month + months;
+            return daysInMonth(
+                start.year + Math.floor(m / monthsInYear),
+                (m % monthsInYear) || monthsInYear,
+            );
+        };
 
         while(days > daysInCurrentMonth()) {
             days -= daysInCurrentMonth();
