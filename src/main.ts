@@ -1,2 +1,3 @@
 export * from "./datetime";
-export type { IDuration, DateTimeRange } from "./duration";
+export * from "./duration";
+export * from "./interval";

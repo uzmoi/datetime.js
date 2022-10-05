@@ -9,9 +9,10 @@ import {
     monthsInYear,
     secondsInMinute,
 } from "./datetime";
-import { DateTimeRange, IDuration } from "./duration";
+import { IDuration } from "./duration";
+import { Interval } from "./interval";
 
-describe("DateTimeRange", () => {
+describe("Interval", () => {
     const plus: IDuration = {
         years:        1,
         months:       2,
@@ -28,8 +29,8 @@ describe("DateTimeRange", () => {
         { years: 5, months: 2, days: 27, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 },
         { years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 },
     ])("new %j", dur => {
-        const range = new DateTimeRange(start, start.plus(dur));
-        expect({ ...range }).toEqual({ ...dur, start, end: start.plus(dur) });
+        const interval = new Interval(start, start.plus(dur));
+        expect({ ...interval }).toEqual({ ...dur, start, end: start.plus(dur) });
     });
     {
         const expectedDays = plus.years * daysInYear
@@ -47,13 +48,13 @@ describe("DateTimeRange", () => {
             ] as const).reduce((prev, [rate, value]) => prev * rate + value, expectedDays)],
             // ["weeks", Math.floor(expectedDays / daysInWeek)],
         ] as const)(".to('%s')", (key, expected) => {
-            const range = DateTime.range(start, start.plus(plus));
-            expect(range.to(key)).toBe(expected);
+            const interval = new Interval(start, start.plus(plus));
+            expect(interval.to(key)).toBe(expected);
         });
     }
     test("(unixEpoch..now).to('milliseconds') === Date.now()", () => {
         const now = Date.now();
-        const rangeFromUnixEpochToNow = DateTime.range("1970-01-01T00:00:00.000Z", now);
-        expect(rangeFromUnixEpochToNow.to("milliseconds")).toBe(now);
+        const interval = DateTime.interval("1970-01-01T00:00:00.000Z", now);
+        expect(interval.to("milliseconds")).toBe(now);
     });
 });

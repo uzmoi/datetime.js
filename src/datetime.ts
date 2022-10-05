@@ -1,5 +1,6 @@
 import { modulo, Nomalize } from "emnorst";
-import { DateTimeRange, IDuration } from "./duration";
+import { IDuration } from "./duration";
+import { Interval } from "./interval";
 import { dateToString, timeToString } from "./string";
 
 export interface IDate {
@@ -101,8 +102,8 @@ const dateTimeDefaults: IDateTime = {
 };
 
 export class DateTime implements IDateTime {
-    static range(start: DateTimeable, end: DateTimeable): DateTimeRange {
-        return new DateTimeRange(DateTime.from(start), DateTime.from(end));
+    static interval(start: DateTimeable, end: DateTimeable): Interval {
+        return new Interval(DateTime.from(start), DateTime.from(end));
     }
     static now(): DateTime {
         return DateTime.from(Date.now());

@@ -33,6 +33,6 @@
 - `secondsInMinute` constant
 - `millisInSecond` constant
 - `IDuration` type
-- `DateTimeRange` class
-- `DateTime.range` function
-- `DateTimeRange.prototype.to` function
+- `Interval` class
+- `DateTime.interval` function
+- `Interval.prototype.to` function
