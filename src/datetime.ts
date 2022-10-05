@@ -160,7 +160,7 @@ export class DateTime implements IDateTime {
     plus(dur: Partial<IDuration>): DateTime {
         return normalizeDateTimeMap(key => this[key] + (dur[`${key}s`] ?? 0));
     }
-    startOf(key: Exclude<keyof IDateTime, "offset" | "millisecond"> | "week"): DateTime {
+    startOf(key: Exclude<keyof IDateTime, "millisecond"> | "week"): DateTime {
         const dt: Partial<IDateTime> = { millisecond: 0 };
         if(key === "week") {
             dt.day = this.day - weekday(this);
@@ -180,7 +180,7 @@ export class DateTime implements IDateTime {
         }
         return this.with(dt);
     }
-    endOf(key: Exclude<keyof IDateTime, "offset" | "millisecond"> | "week") {
+    endOf(key: Exclude<keyof IDateTime, "millisecond"> | "week") {
         const start = this.startOf(key);
         if(key === "week") {
             return start.plus({ days: 7, milliseconds: -1 });
