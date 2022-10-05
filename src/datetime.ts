@@ -1,4 +1,4 @@
-import { modulo } from "emnorst";
+import { modulo, Nomalize } from "emnorst";
 import { DateTimeRange, IDuration } from "./duration";
 import { dateToString, timeToString } from "./string";
 
@@ -77,23 +77,40 @@ const normalizeDateTimeMap = (get: (key: keyof IDateTime) => number): DateTime =
     );
 };
 
+export type DateTimeTuple = [
+    year:         number,
+    month?:       number,
+    day?:         number,
+    hour?:        number,
+    minute?:      number,
+    second?:      number,
+    millisecond?: number,
+];
+
+export type DateTimeable = Nomalize<Partial<IDateTime> & { year: number }>
+    | DateTimeTuple | string | number | Date;
+
+const dateTimeDefaults: IDateTime = {
+    year:        NaN,
+    month:       1,
+    day:         1,
+    hour:        0,
+    minute:      0,
+    second:      0,
+    millisecond: 0,
+};
+
 export class DateTime implements IDateTime {
-    static range(
-        start: DateTime | string | number | Date,
-        end: DateTime | string | number | Date,
-    ): DateTimeRange {
-        if(!(start instanceof DateTime)) {
-            start = DateTime.from(start);
-        }
-        if(!(end instanceof DateTime)) {
-            end = DateTime.from(end);
-        }
-        return new DateTimeRange(start, end);
+    static range(start: DateTimeable, end: DateTimeable): DateTimeRange {
+        return new DateTimeRange(DateTime.from(start), DateTime.from(end));
     }
     static now(): DateTime {
         return DateTime.from(Date.now());
     }
-    static from(source: string | number | Date): DateTime {
+    static from(source: DateTimeable): DateTime {
+        if(source instanceof DateTime) {
+            return source;
+        }
         if(typeof source === "string" || typeof source === "number") {
             source = new Date(source);
         }
@@ -108,9 +125,19 @@ export class DateTime implements IDateTime {
                 source.getUTCMilliseconds(),
             );
         }
-        // @ts-expect-error
-        const _: never = source;
-        throw new TypeError("unknown source type.");
+        if(Array.isArray(source)) {
+            source = {
+                year: source[0],
+                month: source[1],
+                day: source[2],
+                hour: source[3],
+                minute: source[4],
+                second: source[5],
+                millisecond: source[6],
+            };
+        }
+        const obj = source;
+        return normalizeDateTimeMap(key => obj[key] ?? dateTimeDefaults[key]);
     }
     private constructor(
         readonly year: number,

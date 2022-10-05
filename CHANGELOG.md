@@ -5,6 +5,8 @@
 - `IDate` type
 - `ITime` type
 - `IDateTime` type
+- `DateTimeTuple` type
+- `DateTimeable` type
 - `DateTime` class
 - `DateTime.from` function
 - `DateTime.now` function
