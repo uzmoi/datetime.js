@@ -34,5 +34,5 @@
 - `millisInSecond` constant
 - `IDuration` type
 - `Interval` class
-- `DateTime.interval` function
+- `Interval.from` function
 - `Interval.prototype.to` function

@@ -54,7 +54,7 @@ describe("Interval", () => {
     }
     test("(unixEpoch..now).to('milliseconds') === Date.now()", () => {
         const now = Date.now();
-        const interval = DateTime.interval("1970-01-01T00:00:00.000Z", now);
+        const interval = Interval.from("1970-01-01T00:00:00.000Z", now);
         expect(interval.to("milliseconds")).toBe(now);
     });
 });

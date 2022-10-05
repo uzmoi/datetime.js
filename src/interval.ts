@@ -1,6 +1,7 @@
 import { assert, modulo } from "emnorst";
 import {
     DateTime,
+    DateTimeable,
     daysInMonth,
     daysInYear,
     hoursInDay,
@@ -15,6 +16,9 @@ import {
 import { IDuration } from "./duration";
 
 export class Interval implements IDuration {
+    static from(start: DateTimeable, end: DateTimeable): Interval {
+        return new Interval(DateTime.from(start), DateTime.from(end));
+    }
     readonly years: number;
     readonly months: number;
     readonly days: number;
