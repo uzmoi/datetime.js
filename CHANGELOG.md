@@ -43,4 +43,6 @@
 - `IDuration` type
 - `Interval` class
 - `Interval.from` function
+- `Interval.before` function
+- `Interval.after` function
 - `Interval.prototype.to` function

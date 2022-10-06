@@ -19,6 +19,14 @@ export class Interval implements IDuration {
     static from(start: DateTimeable, end: DateTimeable): Interval {
         return new Interval(DateTime.from(start), DateTime.from(end));
     }
+    static before(end: DateTimeable, dur: Partial<IDuration>): Interval {
+        const enddt = DateTime.from(end);
+        return new Interval(enddt.minus(dur), enddt);
+    }
+    static after(start: DateTimeable, dur: Partial<IDuration>): Interval {
+        const startdt = DateTime.from(start);
+        return new Interval(startdt, startdt.plus(dur));
+    }
     readonly years: number;
     readonly months: number;
     readonly days: number;
