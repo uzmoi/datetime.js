@@ -157,6 +157,9 @@ export class DateTime implements IDateTime {
     plus(dur: Partial<IDuration>): DateTime {
         return normalizeDateTimeMap(key => this[key] + (dur[`${key}s`] ?? 0));
     }
+    minus(dur: Partial<IDuration>): DateTime {
+        return normalizeDateTimeMap(key => this[key] - (dur[`${key}s`] ?? 0));
+    }
     startOf(key: Exclude<keyof IDateTime, "millisecond"> | "week"): DateTime {
         const dt: Partial<IDateTime> = { millisecond: 0 };
         if(key === "week") {

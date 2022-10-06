@@ -13,6 +13,7 @@
 - `DateTime.prototype.toString` function
 - `DateTime.prototype.with` function
 - `DateTime.prototype.plus` function
+- `DateTime.prototype.minus` function
 - `DateTime.prototype.startOf` function
 - `DateTime.prototype.endOf` function
 - `WeekdayFullString` type
