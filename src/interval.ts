@@ -3,7 +3,7 @@ import {
     DateTime,
     DateTimeable,
     daysInMonth,
-    daysInYear,
+    daysInYearWithoutLeapDay,
     hoursInDay,
     leapDays,
     millisInSecond,
@@ -70,7 +70,7 @@ export class Interval implements IDuration {
         if(key === "months") {
             return this.years * monthsInYear + this.months;
         }
-        const days = (this.end.year - this.start.year) * daysInYear
+        const days = (this.end.year - this.start.year) * daysInYearWithoutLeapDay
             + leapDays(this.end.year) - leapDays(this.start.year)
             + yearday(this.end) - yearday(this.start);
         if(key === "days") {

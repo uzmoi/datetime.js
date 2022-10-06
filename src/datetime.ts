@@ -220,6 +220,8 @@ export const weeksInYear = (year: number): WeeksInYear => {
     return weekday === 0 || (weekday === 6 && isLeapYear(year)) ? 53 : 52;
 };
 
+export const daysInYearWithoutLeapDay = 365;
+
 export const yearday = (date: IDate): number => {
     // this.month が
     //   1 ならば 13
@@ -229,7 +231,7 @@ export const yearday = (date: IDate): number => {
     const m = (date.month + 9) % 12 + 4;
     // fairfieldの公式
     // -64 === -122 + 31(1月の日数) + 28(2月の日数) - 1(dayが1から始まるため、1月1日を0とする調整)
-    const dayOfYearWithoutLeapDay = ((306 * m / 10 | 0) - 64 + date.day) % daysInYear;
+    const dayOfYearWithoutLeapDay = ((306 * m / 10 | 0) - 64 + date.day) % daysInYearWithoutLeapDay;
 
     const leapDay = +(date.month > 2 && isLeapYear(date.year));
     return dayOfYearWithoutLeapDay + leapDay;
@@ -252,7 +254,6 @@ export const daysInMonth = (year: number, month: number): DaysInMonth => {
     return daysInMonthArray[month - 1] + leapDay as DaysInMonth;
 };
 
-export const daysInYear = 365;
 export const daysInWeek = 7;
 export const monthsInYear = 12;
 

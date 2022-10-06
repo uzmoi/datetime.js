@@ -23,11 +23,11 @@
 - `weekday` function
 - `WeeksInYear` type
 - `weeksInYear` function
+- `daysInYearWithoutLeapDay` constant
 - `yearday` function
 - `isLeapYear` function
 - `leapDays` function
 - `monthsInYear` constant
-- `daysInYear` constant
 - `DaysInMonth` type
 - `daysInMonth` function
 - `daysInWeek` constant

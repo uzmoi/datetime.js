@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import {
     DateTime,
     daysInMonth,
-    daysInYear,
+    daysInYearWithoutLeapDay,
     hoursInDay,
     millisInSecond,
     minutesInHour,
@@ -33,7 +33,7 @@ describe("Interval", () => {
         expect({ ...interval }).toEqual({ ...dur, start, end: start.plus(dur) });
     });
     {
-        const expectedDays = plus.years * daysInYear
+        const expectedDays = plus.years * daysInYearWithoutLeapDay
             + daysInMonth(start.year + plus.years, start.month + 1)
             + daysInMonth(start.year + plus.years + 1, (start.month + 2) % monthsInYear);
         test.each([
