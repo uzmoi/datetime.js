@@ -31,6 +31,9 @@
 - `DaysInMonth` type
 - `daysInMonth` function
 - `daysInWeek` constant
+- `MonthFullString` type
+- `MonthString` type
+- `monthString` function
 - `hoursInDay` constant
 - `minutesInHour` constant
 - `secondsInMinute` constant

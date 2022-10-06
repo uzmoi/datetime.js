@@ -256,6 +256,22 @@ export const daysInYear = 365;
 export const daysInWeek = 7;
 export const monthsInYear = 12;
 
+export type MonthFullString = typeof monthStringArray[number];
+export type MonthString = Head3<MonthFullString>;
+
+const monthStringArray = [
+    "January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December",
+] as const;
+
+export const monthString: {
+    (month: number, full: true): MonthFullString;
+    (month: number, full?: false): MonthString;
+} = (month: number, full = false): never => {
+    const fullString = monthStringArray[month - 1];
+    return (full ? fullString : fullString.slice(0, 3)) as never;
+};
+
 export const hoursInDay = 24;
 export const minutesInHour = 60;
 export const secondsInMinute = 60;
