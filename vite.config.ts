@@ -1,4 +1,5 @@
 import { defineConfig } from "vitest/config";
+import pkg from "./package.json";
 
 export default defineConfig({
     build: {
@@ -7,6 +8,8 @@ export default defineConfig({
             formats: ["es"],
             fileName: "datetime"
         },
+        rollupOptions: {
+            external: Object.keys(pkg.dependencies),
+        },
     },
-    test: {},
 });
