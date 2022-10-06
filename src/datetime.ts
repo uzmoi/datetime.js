@@ -191,7 +191,7 @@ export class DateTime implements IDateTime {
 }
 
 export type WeekdayFullString = `${typeof weekDayStringArray[number]}day`;
-export type WeekdayString = "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat";
+export type WeekdayString = Head3<WeekdayFullString>;
 
 const weekDayStringArray = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"] as const;
 
@@ -260,3 +260,11 @@ export const hoursInDay = 24;
 export const minutesInHour = 60;
 export const secondsInMinute = 60;
 export const millisInSecond = 1000;
+
+// utils
+
+type Head3<T extends string> = (
+    T extends `${infer H1}${infer H2}${infer H3}${string}`
+        ? `${H1}${H2}${H3}`
+    : never
+);
