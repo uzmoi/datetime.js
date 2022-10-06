@@ -210,6 +210,13 @@ export const weekday = (date: IDate): Weekday => {
     return dayFromUnixEpoc % daysInWeek as Weekday;
 };
 
+export type WeeksInYear = 52 | 53;
+
+export const weeksInYear = (year: number): WeeksInYear => {
+    const weekday = (year + leapDays(year - 1)) % daysInWeek;
+    return weekday === 0 || (weekday === 6 && isLeapYear(year)) ? 53 : 52;
+};
+
 export const yearday = (date: IDate): number => {
     // this.month が
     //   1 ならば 13

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { DateTime, isLeapYear, yearday } from "./datetime";
+import { DateTime, isLeapYear, weekday, weeksInYear, yearday } from "./datetime";
 
 describe("DateTime", () => {
     test(".toString()", () => {
@@ -47,6 +47,25 @@ describe("DateTime", () => {
         const base = DateTime.from("2022-11-07T01:23:45.678Z");
         expect(base.endOf(key)).toStrictEqual(DateTime.from(expected));
     });
+});
+
+test.each([
+    { year: 2017, leap: false, weekDay: 0 },
+    { year: 2018, leap: false, weekDay: 1 },
+    { year: 2022, leap: false, weekDay: 6 },
+    { year: 2012, leap: true,  weekDay: 0 },
+    { year: 2024, leap: true,  weekDay: 1 },
+    { year: 2028, leap: true,  weekDay: 6 },
+])("weeksInYear($year) // leap=$leap, weekday=$weekday", ({ year, leap, weekDay }) => {
+    expect(isLeapYear(year)).toBe(leap);
+    expect(weekday({ year, month: 1, day: 1 })).toBe(weekDay);
+    let expectWeeksInYear = 0;
+    for(let x = DateTime.from([year]); x.year === year; x = x.plus({ days: 1 })) {
+        if(weekday(x) === 0) {
+            expectWeeksInYear++;
+        }
+    }
+    expect(weeksInYear(year)).toBe(expectWeeksInYear);
 });
 
 test.each(

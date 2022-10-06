@@ -20,6 +20,8 @@
 - `weekdayString` function
 - `Weekday` type
 - `weekday` function
+- `WeeksInYear` type
+- `weeksInYear` function
 - `yearday` function
 - `isLeapYear` function
 - `leapDays` function
