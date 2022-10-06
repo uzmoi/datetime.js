@@ -7,7 +7,7 @@ describe("DateTime", () => {
         expect(dt.toString()).toBe("2022-11-07T01:23:45.678");
     });
     test("plus", () => {
-        const dt = DateTime.from("2022-01-01T00:00:00.000Z").plus({
+        const dt = DateTime.from([2022]).plus({
             months: 10,
             days: 6,
             hours: 1,
@@ -18,7 +18,7 @@ describe("DateTime", () => {
         expect(dt).toEqual(DateTime.from("2022-11-07T01:23:45.678Z"));
     });
     test("plus order", () => {
-        const base = DateTime.from("2022-01-01T00:00:00.000Z");
+        const base = DateTime.from([2022]);
         const dt = base.plus({ years: 2 }).plus({ days: 60 });
         expect(isLeapYear(dt.year)).toBe(true);
         expect(base.plus({ years: 2, days: 60 })).toEqual(dt);
@@ -69,12 +69,8 @@ test.each([
 });
 
 test.each(
-    Array.from({ length: 12 }, (_, i) => {
-        const m = String(i + 1).padStart(2, "0");
-        return `2022-${m}-01T00:00:00.000Z`;
-    })
-)("yearday('%s')", isoString => {
-    const dt = DateTime.from(isoString);
+    Array.from({ length: 12 }, (_, i) => DateTime.from([2022, i + 1]))
+)("yearday('%s')", dt => {
     // expect(yearday(dt)).toBe(Math.floor((+dt - +dt.startOf("year")) / 86400000));
     expect(dt.startOf("year").plus({ days: yearday(dt) })).toEqual(dt);
 });
