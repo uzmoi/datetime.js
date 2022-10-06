@@ -23,7 +23,9 @@
 - `weekday` function
 - `WeeksInYear` type
 - `weeksInYear` function
+- `DaysInYear` type
 - `daysInYearWithoutLeapDay` constant
+- `daysInYear` function
 - `yearday` function
 - `isLeapYear` function
 - `leapDays` function

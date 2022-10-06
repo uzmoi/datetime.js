@@ -220,7 +220,13 @@ export const weeksInYear = (year: number): WeeksInYear => {
     return weekday === 0 || (weekday === 6 && isLeapYear(year)) ? 53 : 52;
 };
 
+export type DaysInYear = 365 | 366;
+
 export const daysInYearWithoutLeapDay = 365;
+
+export const daysInYear = (year: number): DaysInYear => {
+    return daysInYearWithoutLeapDay + +isLeapYear(year) as DaysInYear;
+};
 
 export const yearday = (date: IDate): number => {
     // this.month が
