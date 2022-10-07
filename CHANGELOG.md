@@ -2,10 +2,10 @@
 # Change Log
 
 ## [Unreleased]
-- `IDate` type
-- `ITime` type
-- `IDateTime` type
-- `PartialIDateTime` type
+- `DateObject` type
+- `TimeObject` type
+- `DateTimeObject` type
+- `PartialDateTimeObject` type
 - `DateTimeTuple` type
 - `DateTimeLike` type
 - `DateTime` class
@@ -48,7 +48,7 @@
 - `minutesInHour` constant
 - `secondsInMinute` constant
 - `millisInSecond` constant
-- `IDuration` type
+- `DurationObject` type
 - `Interval` class
 - `Interval.from` function
 - `Interval.before` function

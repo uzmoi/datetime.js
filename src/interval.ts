@@ -13,17 +13,17 @@ import {
     secondsInMinute,
     yearday,
 } from "./datetime";
-import { IDuration } from "./duration";
+import { DurationObject } from "./duration";
 
-export class Interval implements IDuration {
+export class Interval implements DurationObject {
     static from(start: DateTimeLike, end: DateTimeLike): Interval {
         return new Interval(DateTime.from(start), DateTime.from(end));
     }
-    static before(end: DateTimeLike, dur: Partial<IDuration>): Interval {
+    static before(end: DateTimeLike, dur: Partial<DurationObject>): Interval {
         const enddt = DateTime.from(end);
         return new Interval(enddt.minus(dur), enddt);
     }
-    static after(start: DateTimeLike, dur: Partial<IDuration>): Interval {
+    static after(start: DateTimeLike, dur: Partial<DurationObject>): Interval {
         const startdt = DateTime.from(start);
         return new Interval(startdt, startdt.plus(dur));
     }
@@ -71,7 +71,7 @@ export class Interval implements IDuration {
         this.seconds      = time.second;
         this.milliseconds = time.millisecond;
     }
-    to(key: keyof IDuration): number {
+    to(key: keyof DurationObject): number {
         if(key === "years") {
             return this.years;
         }

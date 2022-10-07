@@ -1,14 +1,14 @@
 import { modulo, Nomalize } from "emnorst";
-import { IDuration } from "./duration";
+import { DurationObject } from "./duration";
 import { dateToString, timeToString } from "./string";
 
-export interface IDate {
+export interface DateObject {
     year: number;
     month: number;
     day: number;
 }
 
-export const normalizeDate = (date: IDate): IDate => {
+export const normalizeDate = (date: DateObject): DateObject => {
     let day = date.day;
     let month = modulo(date.month, monthsInYear) || monthsInYear;
     let year = date.year + Math.floor((date.month - 1) / monthsInYear);
@@ -31,14 +31,14 @@ export const normalizeDate = (date: IDate): IDate => {
     return { day, month, year };
 };
 
-export interface ITime {
+export interface TimeObject {
     hour: number;
     minute: number;
     second: number;
     millisecond: number;
 }
 
-export const normalizeTime = (time: ITime): ITime => {
+export const normalizeTime = (time: TimeObject): TimeObject => {
     const millisecond = time.millisecond;
     const second = time.second + Math.floor(millisecond / millisInSecond);
     const minute = time.minute + Math.floor(second / secondsInMinute);
@@ -51,11 +51,11 @@ export const normalizeTime = (time: ITime): ITime => {
     };
 };
 
-export interface IDateTime extends IDate, ITime {}
+export interface DateTimeObject extends DateObject, TimeObject {}
 
-export type PartialIDateTime = Nomalize<Partial<IDateTime> & Pick<IDateTime, "year">>;
+export type PartialDateTimeObject = Nomalize<Partial<DateTimeObject> & Pick<DateTimeObject, "year">>;
 
-const normalizedDateTimeFrom = (get: (key: keyof IDateTime) => number): DateTime => {
+const normalizedDateTimeFrom = (get: (key: keyof DateTimeObject) => number): DateTime => {
     const time = normalizeTime({
         hour:        get("hour"),
         minute:      get("minute"),
@@ -89,9 +89,9 @@ export type DateTimeTuple = [
     millisecond?: number,
 ];
 
-export type DateTimeLike = PartialIDateTime | DateTimeTuple | string | number | Date;
+export type DateTimeLike = PartialDateTimeObject | DateTimeTuple | string | number | Date;
 
-const dateTimeDefaults: IDateTime = {
+const dateTimeDefaults: DateTimeObject = {
     year:        NaN,
     month:       1,
     day:         1,
@@ -101,7 +101,7 @@ const dateTimeDefaults: IDateTime = {
     millisecond: 0,
 };
 
-export class DateTime implements IDateTime {
+export class DateTime implements DateTimeObject {
     static now(): DateTime {
         return DateTime.from(Date.now());
     }
@@ -173,17 +173,17 @@ export class DateTime implements IDateTime {
     toString(): string {
         return dateToString(this) + "T" + timeToString(this);
     }
-    with(dt: Partial<IDateTime>): DateTime {
+    with(dt: Partial<DateTimeObject>): DateTime {
         return normalizedDateTimeFrom(key => dt[key] ?? this[key]);
     }
-    plus(dur: Partial<IDuration>): DateTime {
+    plus(dur: Partial<DurationObject>): DateTime {
         return normalizedDateTimeFrom(key => this[key] + (dur[`${key}s`] ?? 0));
     }
-    minus(dur: Partial<IDuration>): DateTime {
+    minus(dur: Partial<DurationObject>): DateTime {
         return normalizedDateTimeFrom(key => this[key] - (dur[`${key}s`] ?? 0));
     }
-    startOf(key: Exclude<keyof IDateTime, "millisecond"> | "week"): DateTime {
-        const dt: Partial<IDateTime> = { millisecond: 0 };
+    startOf(key: Exclude<keyof DateTimeObject, "millisecond"> | "week"): DateTime {
+        const dt: Partial<DateTimeObject> = { millisecond: 0 };
         if(key === "week") {
             dt.day = this.day - weekday(this);
             key = "day";
@@ -202,7 +202,7 @@ export class DateTime implements IDateTime {
         }
         return this.with(dt);
     }
-    endOf(key: Exclude<keyof IDateTime, "millisecond"> | "week") {
+    endOf(key: Exclude<keyof DateTimeObject, "millisecond"> | "week") {
         const start = this.startOf(key);
         if(key === "week") {
             return start.plus({ days: 7, milliseconds: -1 });
@@ -218,9 +218,9 @@ export type WeekdayStringShort = Head3<WeekdayStringLong>;
 const weekDayStringArray = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"] as const;
 
 export const weekdayString: {
-    (date: IDate, long: true): WeekdayStringLong;
-    (date: IDate, long?: false): WeekdayStringShort;
-} = (date: IDate, long = false): never => {
+    (date: DateObject, long: true): WeekdayStringLong;
+    (date: DateObject, long?: false): WeekdayStringShort;
+} = (date: DateObject, long = false): never => {
     const base = weekDayStringArray[weekday(date)];
     const result: WeekdayStringShort | WeekdayStringLong = (
         long ? `${base}day` : base.slice(0, 3) as WeekdayStringShort
@@ -230,7 +230,7 @@ export const weekdayString: {
 
 export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
-export const weekday = (date: IDate): Weekday => {
+export const weekday = (date: DateObject): Weekday => {
     const dayFromUnixEpoc = date.year + leapDays(date.year - 1) + yearday(date);
     return dayFromUnixEpoc % daysInWeek as Weekday;
 };
@@ -250,7 +250,7 @@ export const daysInYear = (year: number): DaysInYear => {
     return daysInYearWithoutLeapDay + +isLeapYear(year) as DaysInYear;
 };
 
-export const yearday = (date: IDate): number => {
+export const yearday = (date: DateObject): number => {
     // this.month が
     //   1 ならば 13
     //   2 ならば 14

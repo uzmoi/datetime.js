@@ -1,4 +1,4 @@
-export interface IDuration {
+export interface DurationObject {
     years: number;
     months: number;
     days: number;

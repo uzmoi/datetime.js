@@ -9,11 +9,11 @@ import {
     monthsInYear,
     secondsInMinute,
 } from "./datetime";
-import { IDuration } from "./duration";
+import { DurationObject } from "./duration";
 import { Interval } from "./interval";
 
 describe("Interval", () => {
-    const plus: IDuration = {
+    const plus: DurationObject = {
         years:        1,
         months:       2,
         days:         26,
@@ -23,7 +23,7 @@ describe("Interval", () => {
         milliseconds: 999,
     };
     const start = DateTime.from("2022-11-07T01:23:45.678Z");
-    test.each<IDuration>([
+    test.each<DurationObject>([
         plus,
         { years: 2, months: 1, days: 30, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 },
         { years: 5, months: 2, days: 27, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 },
