@@ -11,6 +11,13 @@
 - `DateTime` class
 - `DateTime.from` function
 - `DateTime.now` function
+- `DateTime.prototype.inLeapYear` getter
+- `DateTime.prototype.monthStringShort` getter
+- `DateTime.prototype.monthStringLong` getter
+- `DateTime.prototype.weekdayStringShort` getter
+- `DateTime.prototype.weekdayStringLong` getter
+- `DateTime.prototype.weekday` getter
+- `DateTime.prototype.yearday` getter
 - `DateTime.prototype.toString` function
 - `DateTime.prototype.with` function
 - `DateTime.prototype.plus` function

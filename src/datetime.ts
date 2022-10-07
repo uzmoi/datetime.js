@@ -146,6 +146,27 @@ export class DateTime implements IDateTime {
         readonly second: number,
         readonly millisecond: number,
     ) {}
+    get inLeapYear(): boolean {
+        return isLeapYear(this.year);
+    }
+    get monthStringShort(): MonthStringShort {
+        return monthString(this.month);
+    }
+    get monthStringLong(): MonthStringLong {
+        return monthString(this.month, true);
+    }
+    get weekdayStringShort(): WeekdayStringShort {
+        return weekdayString(this);
+    }
+    get weekdayStringLong(): WeekdayStringLong {
+        return weekdayString(this, true);
+    }
+    get weekday(): Weekday {
+        return weekday(this);
+    }
+    get yearday(): number {
+        return yearday(this);
+    }
     /**
      * @returns "YYYY-MM-DDThh:mm:ss.nnn"
      */
