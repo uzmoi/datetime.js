@@ -1,7 +1,7 @@
 import { assert, modulo } from "emnorst";
 import {
     DateTime,
-    DateTimeable,
+    DateTimeLike,
     daysInMonth,
     daysInYearWithoutLeapDay,
     hoursInDay,
@@ -16,14 +16,14 @@ import {
 import { IDuration } from "./duration";
 
 export class Interval implements IDuration {
-    static from(start: DateTimeable, end: DateTimeable): Interval {
+    static from(start: DateTimeLike, end: DateTimeLike): Interval {
         return new Interval(DateTime.from(start), DateTime.from(end));
     }
-    static before(end: DateTimeable, dur: Partial<IDuration>): Interval {
+    static before(end: DateTimeLike, dur: Partial<IDuration>): Interval {
         const enddt = DateTime.from(end);
         return new Interval(enddt.minus(dur), enddt);
     }
-    static after(start: DateTimeable, dur: Partial<IDuration>): Interval {
+    static after(start: DateTimeLike, dur: Partial<IDuration>): Interval {
         const startdt = DateTime.from(start);
         return new Interval(startdt, startdt.plus(dur));
     }

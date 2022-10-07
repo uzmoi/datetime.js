@@ -87,7 +87,7 @@ export type DateTimeTuple = [
     millisecond?: number,
 ];
 
-export type DateTimeable = Nomalize<Partial<IDateTime> & { year: number }>
+export type DateTimeLike = Nomalize<Partial<IDateTime> & { year: number }>
     | DateTimeTuple | string | number | Date;
 
 const dateTimeDefaults: IDateTime = {
@@ -104,7 +104,7 @@ export class DateTime implements IDateTime {
     static now(): DateTime {
         return DateTime.from(Date.now());
     }
-    static from(source: DateTimeable): DateTime {
+    static from(source: DateTimeLike): DateTime {
         if(source instanceof DateTime) {
             return source;
         }
