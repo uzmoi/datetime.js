@@ -53,6 +53,8 @@ export const normalizeTime = (time: ITime): ITime => {
 
 export interface IDateTime extends IDate, ITime {}
 
+export type PartialIDateTime = Nomalize<Partial<IDateTime> & Pick<IDateTime, "year">>;
+
 const normalizeDateTimeMap = (get: (key: keyof IDateTime) => number): DateTime => {
     const time = normalizeTime({
         hour:        get("hour"),
@@ -87,8 +89,7 @@ export type DateTimeTuple = [
     millisecond?: number,
 ];
 
-export type DateTimeLike = Nomalize<Partial<IDateTime> & { year: number }>
-    | DateTimeTuple | string | number | Date;
+export type DateTimeLike = PartialIDateTime | DateTimeTuple | string | number | Date;
 
 const dateTimeDefaults: IDateTime = {
     year:        NaN,

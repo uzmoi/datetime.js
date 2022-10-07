@@ -5,6 +5,7 @@
 - `IDate` type
 - `ITime` type
 - `IDateTime` type
+- `PartialIDateTime` type
 - `DateTimeTuple` type
 - `DateTimeLike` type
 - `DateTime` class
