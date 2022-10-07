@@ -173,6 +173,17 @@ export class DateTime implements DateTimeObject {
     toString(): string {
         return dateToString(this) + "T" + timeToString(this);
     }
+    valueOf(): number {
+        return Date.UTC(
+            this.year,
+            this.month - 1,
+            this.day,
+            this.hour,
+            this.minute,
+            this.second,
+            this.millisecond,
+        );
+    }
     with(dt: Partial<DateTimeObject>): DateTime {
         return normalizedDateTimeFrom(key => dt[key] ?? this[key]);
     }

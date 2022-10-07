@@ -19,6 +19,7 @@
 - `DateTime.prototype.weekday` getter
 - `DateTime.prototype.yearday` getter
 - `DateTime.prototype.toString` function
+- `DateTime.prototype.valueOf` function
 - `DateTime.prototype.with` function
 - `DateTime.prototype.plus` function
 - `DateTime.prototype.minus` function
