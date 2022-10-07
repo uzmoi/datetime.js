@@ -29,8 +29,7 @@ describe("Interval", () => {
         { years: 5, months: 2, days: 27, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 },
         { years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 },
     ])("new %j", dur => {
-        const interval = new Interval(start, start.plus(dur));
-        expect({ ...interval }).toEqual({ ...dur, start, end: start.plus(dur) });
+        expect(new Interval(start, start.plus(dur))).toMatchObject(dur);
     });
     {
         const expectedDays = plus.years * daysInYearWithoutLeapDay
