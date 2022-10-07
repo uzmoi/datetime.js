@@ -16,8 +16,8 @@
 - `DateTime.prototype.minus` function
 - `DateTime.prototype.startOf` function
 - `DateTime.prototype.endOf` function
-- `WeekdayFullString` type
-- `WeekdayString` type
+- `WeekdayStringLong` type
+- `WeekdayStringShort` type
 - `weekdayString` function
 - `Weekday` type
 - `weekday` function
@@ -33,8 +33,8 @@
 - `DaysInMonth` type
 - `daysInMonth` function
 - `daysInWeek` constant
-- `MonthFullString` type
-- `MonthString` type
+- `MonthStringLong` type
+- `MonthStringShort` type
 - `monthString` function
 - `hoursInDay` constant
 - `minutesInHour` constant

@@ -190,18 +190,18 @@ export class DateTime implements IDateTime {
     }
 }
 
-export type WeekdayFullString = `${typeof weekDayStringArray[number]}day`;
-export type WeekdayString = Head3<WeekdayFullString>;
+export type WeekdayStringLong = `${typeof weekDayStringArray[number]}day`;
+export type WeekdayStringShort = Head3<WeekdayStringLong>;
 
 const weekDayStringArray = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"] as const;
 
 export const weekdayString: {
-    (date: IDate, full: true): WeekdayFullString;
-    (date: IDate, full?: false): WeekdayString;
-} = (date: IDate, full = false): never => {
+    (date: IDate, long: true): WeekdayStringLong;
+    (date: IDate, long?: false): WeekdayStringShort;
+} = (date: IDate, long = false): never => {
     const base = weekDayStringArray[weekday(date)];
-    const result: WeekdayString | WeekdayFullString = (
-        full ? `${base}day` : base.slice(0, 3) as WeekdayString
+    const result: WeekdayStringShort | WeekdayStringLong = (
+        long ? `${base}day` : base.slice(0, 3) as WeekdayStringShort
     );
     return result as never;
 };
@@ -263,8 +263,8 @@ export const daysInMonth = (year: number, month: number): DaysInMonth => {
 export const daysInWeek = 7;
 export const monthsInYear = 12;
 
-export type MonthFullString = typeof monthStringArray[number];
-export type MonthString = Head3<MonthFullString>;
+export type MonthStringLong = typeof monthStringArray[number];
+export type MonthStringShort = Head3<MonthStringLong>;
 
 const monthStringArray = [
     "January", "February", "March", "April", "May", "June", "July",
@@ -272,11 +272,11 @@ const monthStringArray = [
 ] as const;
 
 export const monthString: {
-    (month: number, full: true): MonthFullString;
-    (month: number, full?: false): MonthString;
-} = (month: number, full = false): never => {
-    const fullString = monthStringArray[month - 1];
-    return (full ? fullString : fullString.slice(0, 3)) as never;
+    (month: number, long: true): MonthStringLong;
+    (month: number, long?: false): MonthStringShort;
+} = (month: number, long = false): never => {
+    const longString = monthStringArray[month - 1];
+    return (long ? longString : longString.slice(0, 3)) as never;
 };
 
 export const hoursInDay = 24;
