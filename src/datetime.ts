@@ -55,7 +55,7 @@ export interface IDateTime extends IDate, ITime {}
 
 export type PartialIDateTime = Nomalize<Partial<IDateTime> & Pick<IDateTime, "year">>;
 
-const normalizeDateTimeMap = (get: (key: keyof IDateTime) => number): DateTime => {
+const normalizedDateTimeFrom = (get: (key: keyof IDateTime) => number): DateTime => {
     const time = normalizeTime({
         hour:        get("hour"),
         minute:      get("minute"),
@@ -135,7 +135,7 @@ export class DateTime implements IDateTime {
             };
         }
         const obj = source;
-        return normalizeDateTimeMap(key => obj[key] ?? dateTimeDefaults[key]);
+        return normalizedDateTimeFrom(key => obj[key] ?? dateTimeDefaults[key]);
     }
     private constructor(
         readonly year: number,
@@ -174,13 +174,13 @@ export class DateTime implements IDateTime {
         return dateToString(this) + "T" + timeToString(this);
     }
     with(dt: Partial<IDateTime>): DateTime {
-        return normalizeDateTimeMap(key => dt[key] ?? this[key]);
+        return normalizedDateTimeFrom(key => dt[key] ?? this[key]);
     }
     plus(dur: Partial<IDuration>): DateTime {
-        return normalizeDateTimeMap(key => this[key] + (dur[`${key}s`] ?? 0));
+        return normalizedDateTimeFrom(key => this[key] + (dur[`${key}s`] ?? 0));
     }
     minus(dur: Partial<IDuration>): DateTime {
-        return normalizeDateTimeMap(key => this[key] - (dur[`${key}s`] ?? 0));
+        return normalizedDateTimeFrom(key => this[key] - (dur[`${key}s`] ?? 0));
     }
     startOf(key: Exclude<keyof IDateTime, "millisecond"> | "week"): DateTime {
         const dt: Partial<IDateTime> = { millisecond: 0 };
