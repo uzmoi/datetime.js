@@ -56,4 +56,10 @@ describe("Interval", () => {
         const interval = Interval.from("1970-01-01T00:00:00.000Z", now);
         expect(interval.to("milliseconds")).toBe(now);
     });
+    test("overlaps", () => {
+        const a = Interval.from([2000], [2020]);
+        const b = Interval.from([2010], [2030]);
+        expect(a.overlaps(b)).toBe(true);
+        expect(b.overlaps(a)).toBe(true);
+    });
 });

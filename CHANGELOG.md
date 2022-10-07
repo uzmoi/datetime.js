@@ -55,3 +55,5 @@
 - `Interval.before` function
 - `Interval.after` function
 - `Interval.prototype.to` function
+- `Interval.prototype.contains` function
+- `Interval.prototype.overlaps` function

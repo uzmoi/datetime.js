@@ -101,4 +101,10 @@ export class Interval implements DurationObject {
         }
         assert.unreachable<typeof key>();
     }
+    contains(dt: DateTime): boolean {
+        return this.start <= dt && dt <= this.end;
+    }
+    overlaps(i: Interval): boolean {
+        return this.start <= i.end && i.start <= this.end;
+    }
 }
