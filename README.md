@@ -4,3 +4,18 @@
 [![codecov](https://codecov.io/gh/rizzzse/datetime.js/branch/main/graph/badge.svg?token=N5VTZ5QWCB)](https://codecov.io/gh/rizzzse/datetime.js)
 [![npm version](https://img.shields.io/npm/v/@rizzzse/datetime/latest?logo=npm)](https://www.npmjs.com/package/@rizzzse/datetime)
 [![package size](https://img.shields.io/bundlephobia/min/@rizzzse/datetime)](https://bundlephobia.com/package/@rizzzse/datetime)
+
+```ts
+// cjs
+const { DateTime } = require("@rizzzse/datetime");
+// esm
+import { DateTime } from "@rizzzse/datetime";
+```
+
+```html
+<script src="https://unpkg.com/emnorst@0.6.0"></script>
+<script src="https://unpkg.com/@rizzzse/datetime@0.1.0"></script>
+<script>
+    rdt.DateTime;
+</script>
+```
