@@ -3,8 +3,16 @@
   "version": "0.1.0",
   "description": "",
   "type": "module",
-  "main": "dist/datetime.es.js",
-  "types": "dist/main.d.ts",
+  "main": "./dist/datetime.umd.js",
+  "module": "./dist/datetime.js",
+  "types": "./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/datetime.umd.js",
+      "import": "./dist/datetime.js",
+      "types": "./dist/main.d.ts"
+    }
+  },
   "files": [
     "dist"
   ],

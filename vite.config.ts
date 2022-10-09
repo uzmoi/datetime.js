@@ -6,11 +6,16 @@ export default defineConfig({
     build: {
         lib: {
             entry: "src/main.ts",
-            formats: ["es"],
-            fileName: "datetime"
+            fileName: "datetime",
+            name: "rdt",
         },
         rollupOptions: {
             external: Object.keys(pkg.dependencies),
+            output: {
+                globals: {
+                    emnorst: "emnorst",
+                },
+            },
         },
     },
     plugins: [dts()],
