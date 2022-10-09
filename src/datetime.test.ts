@@ -71,6 +71,6 @@ test.each([
 test.each(
     Array.from({ length: 12 }, (_, i) => DateTime.from([2022, i + 1]))
 )("yearday('%s')", dt => {
-    // expect(yearday(dt)).toBe(Math.floor((+dt - +dt.startOf("year")) / 86400000));
+    expect(yearday(dt)).toBe(Math.floor((+dt - +dt.startOf("year")) / 86400000));
     expect(dt.startOf("year").plus({ days: yearday(dt) })).toEqual(dt);
 });
