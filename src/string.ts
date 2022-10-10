@@ -1,4 +1,4 @@
-import { DateObject, TimeObject, minutesInHour } from "./datetime";
+import { DateObject, TimeObject } from "./datetime";
 
 const pad0 = (n: number, len: number) => String(n | 0).padStart(len, "0");
 
