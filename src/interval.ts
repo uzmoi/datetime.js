@@ -11,7 +11,7 @@ import {
     monthsInYear,
     normalizeTime,
     secondsInMinute,
-    yearday,
+    dayOfYear,
 } from "./datetime";
 import { DurationObject } from "./duration";
 
@@ -81,8 +81,8 @@ export class Interval implements DurationObject {
             (this.end.year - this.start.year) * daysInYearWithoutLeapDay +
             leapDays(this.end.year) -
             leapDays(this.start.year) +
-            yearday(this.end) -
-            yearday(this.start);
+            dayOfYear(this.end) -
+            dayOfYear(this.start);
         if (key === "days") {
             return days;
         }

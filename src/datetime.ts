@@ -188,8 +188,9 @@ export class DateTime implements DateTimeObject {
     get weekday(): Weekday {
         return weekday(this);
     }
+    // cspell:disable-next-line
     get yearday(): number {
-        return yearday(this);
+        return dayOfYear(this);
     }
     /**
      * @returns "YYYY-MM-DDThh:mm:ss.nnn"
@@ -276,7 +277,8 @@ export const weekdayString: {
 export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export const weekday = (date: DateObject): Weekday => {
-    const dayFromUnixEpoc = date.year + leapDays(date.year - 1) + yearday(date);
+    const dayFromUnixEpoc =
+        date.year + leapDays(date.year - 1) + dayOfYear(date);
     return (dayFromUnixEpoc % daysInWeek) as Weekday;
 };
 
@@ -295,7 +297,7 @@ export const daysInYear = (year: number): DaysInYear => {
     return (daysInYearWithoutLeapDay + +isLeapYear(year)) as DaysInYear;
 };
 
-export const yearday = (date: DateObject): number => {
+export const dayOfYear = (date: DateObject): number => {
     // this.month が
     //   1 ならば 13
     //   2 ならば 14

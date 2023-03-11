@@ -2,6 +2,13 @@
 # Change Log
 
 ## [Unreleased]
+
+### Changed
+
+- Rename yearday to dayOfYear.
+
+## [0.1.0] - 2022-10-10
+
 - `DateObject` type
 - `TimeObject` type
 - `DateTimeObject` type

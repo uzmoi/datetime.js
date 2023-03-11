@@ -4,7 +4,7 @@ import {
     isLeapYear,
     weekday,
     weeksInYear,
-    yearday,
+    dayOfYear,
 } from "./datetime";
 
 describe("DateTime", () => {
@@ -84,9 +84,9 @@ test.each([
 test.each(Array.from({ length: 12 }, (_, i) => DateTime.from([2022, i + 1])))(
     "yearday('%s')",
     dt => {
-        expect(yearday(dt)).toBe(
+        expect(dayOfYear(dt)).toBe(
             Math.floor((+dt - +dt.startOf("year")) / 86400000),
         );
-        expect(dt.startOf("year").plus({ days: yearday(dt) })).toEqual(dt);
+        expect(dt.startOf("year").plus({ days: dayOfYear(dt) })).toEqual(dt);
     },
 );
