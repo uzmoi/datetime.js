@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/datetime.umd.js",
   "module": "./dist/datetime.js",
   "types": "./dist/main.d.ts",
