@@ -218,9 +218,7 @@ export class DateTime implements DateTimeObject {
     minus(dur: Partial<DurationObject>): DateTime {
         return normalizedDateTimeFrom(key => this[key] - (dur[`${key}s`] ?? 0));
     }
-    startOf(
-        key: Exclude<keyof DateTimeObject, "millisecond"> | "week",
-    ): DateTime {
+    startOf(key: DurationUnit): DateTime {
         const dt: Partial<DateTimeObject> = { millisecond: 0 };
         if (key === "week") {
             dt.day = this.day - weekday(this);
@@ -240,7 +238,7 @@ export class DateTime implements DateTimeObject {
         }
         return this.with(dt);
     }
-    endOf(key: Exclude<keyof DateTimeObject, "millisecond"> | "week") {
+    endOf(key: DurationUnit): DateTime {
         const start = this.startOf(key);
         if (key === "week") {
             return start.plus({ days: 7, milliseconds: -1 });
@@ -250,6 +248,8 @@ export class DateTime implements DateTimeObject {
     }
 }
 
+type DurationUnit = Exclude<keyof DateTimeObject, "millisecond"> | "week";
+
 export type WeekdayStringLong = `${(typeof weekDayStringArray)[number]}day`;
 export type WeekdayStringShort = Head3<WeekdayStringLong>;
 
@@ -257,10 +257,10 @@ const weekDayStringArray = [
     "Sun",
     "Mon",
     "Tues",
-    "Wednes",
+    "Wednes", // cspell:disable-line
     "Thurs",
     "Fri",
-    "Satur",
+    "Satur", // cspell:disable-line
 ] as const;
 
 export const weekdayString: {
@@ -274,12 +274,14 @@ export const weekdayString: {
     return result as never;
 };
 
+export const daysInWeek = 7;
+
 export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export const weekday = (date: DateObject): Weekday => {
-    const dayFromUnixEpoc =
+    const dayFromUnixEpoch =
         date.year + leapDays(date.year - 1) + dayOfYear(date);
-    return (dayFromUnixEpoc % daysInWeek) as Weekday;
+    return (dayFromUnixEpoch % daysInWeek) as Weekday;
 };
 
 export type WeeksInYear = 52 | 53;
@@ -325,14 +327,13 @@ export type DaysInMonth = 28 | 29 | 30 | 31;
 
 const daysInMonthArray = [
     31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
-] as const;
+] as const satisfies readonly DaysInMonth[];
 
 export const daysInMonth = (year: number, month: number): DaysInMonth => {
     const leapDay = +(month === 2 && isLeapYear(year));
     return (daysInMonthArray[month - 1] + leapDay) as DaysInMonth;
 };
 
-export const daysInWeek = 7;
 export const monthsInYear = 12;
 
 export type MonthStringLong = (typeof monthStringArray)[number];

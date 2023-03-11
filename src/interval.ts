@@ -20,12 +20,12 @@ export class Interval implements DurationObject {
         return new Interval(DateTime.from(start), DateTime.from(end));
     }
     static before(end: DateTimeLike, dur: Partial<DurationObject>): Interval {
-        const enddt = DateTime.from(end);
-        return new Interval(enddt.minus(dur), enddt);
+        const endDt = DateTime.from(end);
+        return new Interval(endDt.minus(dur), endDt);
     }
     static after(start: DateTimeLike, dur: Partial<DurationObject>): Interval {
-        const startdt = DateTime.from(start);
-        return new Interval(startdt, startdt.plus(dur));
+        const startDt = DateTime.from(start);
+        return new Interval(startDt, startDt.plus(dur));
     }
     readonly years: number;
     readonly months: number;
