@@ -3,6 +3,9 @@ import { defineConfig } from "vitest/config";
 import pkg from "./package.json";
 
 export default defineConfig({
+    esbuild: {
+        minifyIdentifiers: false,
+    },
     build: {
         lib: {
             entry: "src/main.ts",
