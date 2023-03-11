@@ -3,37 +3,50 @@ import { minutesInHour, weekday } from "./number";
 
 const formatInt = (n: number, len: number) => String(n | 0).padStart(len, "0");
 
-export const dateToString = (date: DateObject): string => {
+export const dateToString = (
+    date: DateObject,
+    format?: "extended" | "basic",
+): string => {
+    const delim = format === "basic" ? "" : "-";
     return (
         formatInt(date.year, 4) +
-        "-" +
+        delim +
         formatInt(date.month, 2) +
-        "-" +
+        delim +
         formatInt(date.day, 2)
     );
 };
 
-export const timeToString = (time: TimeObject): string => {
+export const timeToString = (
+    time: TimeObject,
+    format?: "extended" | "basic",
+): string => {
+    const delim = format === "basic" ? "" : ":";
     return (
         formatInt(time.hour, 2) +
-        ":" +
+        delim +
         formatInt(time.minute, 2) +
-        ":" +
+        delim +
         formatInt(time.second, 2) +
         "." +
         formatInt(time.millisecond, 3)
     );
 };
 
-export const offsetToString = (offset: number, z = true): string => {
+export const offsetToString = (
+    offset: number,
+    z = true,
+    format?: "extended" | "basic",
+): string => {
     if (z && offset === 0) {
         return "Z";
     }
     const sign = offset > 0 ? "-" : "+";
     const absOffset = Math.abs(offset);
+    const delim = format === "basic" ? "" : ":";
     const hour = formatInt((absOffset / minutesInHour) | 0, 2);
     const minute = formatInt(absOffset % minutesInHour, 2);
-    return sign + hour + ":" + minute;
+    return sign + hour + delim + minute;
 };
 
 // Month
