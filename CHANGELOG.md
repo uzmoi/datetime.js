@@ -8,6 +8,8 @@
 - fromNativeDate
 - fromObject
 - daysInMonthAverage
+- dateToString
+- timeToString
 
 ### Changed
 
