@@ -1,0 +1,14 @@
+{
+    "[typescript]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true,
+            "source.fixAll": true,
+        },
+    },
+    "cSpell.words": [
+        "datetime",
+        "emnorst",
+        "millis"
+    ],
+}
