@@ -1,6 +1,15 @@
 import { modulo, Normalize } from "emnorst";
 import { DurationObject } from "./duration";
-import { dateToString, timeToString } from "./string";
+import {
+    dateToString,
+    monthString,
+    MonthStringLong,
+    MonthStringShort,
+    timeToString,
+    weekdayString,
+    WeekdayStringLong,
+    WeekdayStringShort,
+} from "./string";
 
 export interface DateObject {
     year: number;
@@ -250,29 +259,6 @@ export class DateTime implements DateTimeObject {
 
 type DurationUnit = Exclude<keyof DateTimeObject, "millisecond"> | "week";
 
-export type WeekdayStringLong = `${(typeof weekDayStringArray)[number]}day`;
-export type WeekdayStringShort = Head3<WeekdayStringLong>;
-
-const weekDayStringArray = [
-    "Sun",
-    "Mon",
-    "Tues",
-    "Wednes", // cspell:disable-line
-    "Thurs",
-    "Fri",
-    "Satur", // cspell:disable-line
-] as const;
-
-export const weekdayString: {
-    (date: DateObject, long: true): WeekdayStringLong;
-    (date: DateObject, long?: false): WeekdayStringShort;
-} = (date: DateObject, long = false): never => {
-    const base = weekDayStringArray[weekday(date)];
-    const result: WeekdayStringShort | WeekdayStringLong = long
-        ? `${base}day`
-        : (base.slice(0, 3) as WeekdayStringShort);
-    return result as never;
-};
 
 export const daysInWeek = 7;
 
@@ -336,40 +322,7 @@ export const daysInMonth = (year: number, month: number): DaysInMonth => {
 
 export const monthsInYear = 12;
 
-export type MonthStringLong = (typeof monthStringArray)[number];
-export type MonthStringShort = Head3<MonthStringLong>;
-
-const monthStringArray = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-] as const;
-
-export const monthString: {
-    (month: number, long: true): MonthStringLong;
-    (month: number, long?: false): MonthStringShort;
-} = (month: number, long = false): never => {
-    const longString = monthStringArray[month - 1];
-    return (long ? longString : longString.slice(0, 3)) as never;
-};
-
 export const hoursInDay = 24;
 export const minutesInHour = 60;
 export const secondsInMinute = 60;
 export const millisInSecond = 1000;
-
-// utils
-
-type Head3<T extends string> =
-    T extends `${infer H1}${infer H2}${infer H3}${string}`
-        ? `${H1}${H2}${H3}`
-        : never;
