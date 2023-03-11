@@ -34,10 +34,8 @@ export class Interval implements DurationObject {
     readonly minutes: number;
     readonly seconds: number;
     readonly milliseconds: number;
-    constructor(
-        readonly start: DateTime,
-        readonly end: DateTime,
-    ) {
+    constructor(readonly start: DateTime, readonly end: DateTime) {
+        // prettier-ignore
         const time = normalizeTime({
             hour:        end.hour        - start.hour,
             minute:      end.minute      - start.minute,
@@ -45,58 +43,62 @@ export class Interval implements DurationObject {
             millisecond: end.millisecond - start.millisecond,
         });
         let days = end.day - start.day + Math.floor(time.hour / hoursInDay);
-        let months = (end.year - start.year) * monthsInYear + end.month - start.month;
+        let months =
+            (end.year - start.year) * monthsInYear + end.month - start.month;
 
         const daysInCurrentMonth = () => {
             const m = start.month + months;
             return daysInMonth(
                 start.year + Math.floor(m / monthsInYear),
-                (m % monthsInYear) || monthsInYear,
+                m % monthsInYear || monthsInYear,
             );
         };
 
-        while(days > daysInCurrentMonth()) {
+        while (days > daysInCurrentMonth()) {
             days -= daysInCurrentMonth();
             months++;
         }
-        while(days < 0) {
+        while (days < 0) {
             months--;
             days += daysInCurrentMonth();
         }
-        this.years        = Math.floor(months / monthsInYear);
-        this.months       = months % monthsInYear;
-        this.days         = days;
-        this.hours        = modulo(time.hour, hoursInDay);
-        this.minutes      = time.minute;
-        this.seconds      = time.second;
-        this.milliseconds = time.millisecond;
+        this.years        = Math.floor(months / monthsInYear); // prettier-ignore
+        this.months       = months % monthsInYear; // prettier-ignore
+        this.days         = days; // prettier-ignore
+        this.hours        = modulo(time.hour, hoursInDay); // prettier-ignore
+        this.minutes      = time.minute; // prettier-ignore
+        this.seconds      = time.second; // prettier-ignore
+        this.milliseconds = time.millisecond; // prettier-ignore
     }
     to(key: keyof DurationObject): number {
-        if(key === "years") {
+        if (key === "years") {
             return this.years;
         }
-        if(key === "months") {
+        if (key === "months") {
             return this.years * monthsInYear + this.months;
         }
-        const days = (this.end.year - this.start.year) * daysInYearWithoutLeapDay
-            + leapDays(this.end.year) - leapDays(this.start.year)
-            + yearday(this.end) - yearday(this.start);
-        if(key === "days") {
+        const days =
+            (this.end.year - this.start.year) * daysInYearWithoutLeapDay +
+            leapDays(this.end.year) -
+            leapDays(this.start.year) +
+            yearday(this.end) -
+            yearday(this.start);
+        if (key === "days") {
             return days;
         }
         const hours = days * hoursInDay + this.hours;
-        if(key === "hours") {
+        if (key === "hours") {
             return hours;
         }
         const minutes = hours * minutesInHour + this.minutes;
-        if(key === "minutes") {
+        if (key === "minutes") {
             return minutes;
         }
         const seconds = minutes * secondsInMinute + this.seconds;
-        if(key === "seconds") {
+        if (key === "seconds") {
             return seconds;
         }
-        if(key === "milliseconds") {
+        if (key === "milliseconds") {
             return seconds * millisInSecond + this.milliseconds;
         }
         assert.unreachable<typeof key>();

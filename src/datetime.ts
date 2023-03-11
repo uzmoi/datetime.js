@@ -12,17 +12,17 @@ export const normalizeDate = (date: DateObject): DateObject => {
     let day = date.day;
     let month = modulo(date.month, monthsInYear) || monthsInYear;
     let year = date.year + Math.floor((date.month - 1) / monthsInYear);
-    while(day > daysInMonth(year, month)) {
+    while (day > daysInMonth(year, month)) {
         day -= daysInMonth(year, month);
         month++;
-        if(month > monthsInYear) {
+        if (month > monthsInYear) {
             month = 1;
             year++;
         }
     }
-    while(day <= 0) {
+    while (day <= 0) {
         month--;
-        if(month < 1) {
+        if (month < 1) {
             month = monthsInYear;
             year--;
         }
@@ -53,15 +53,21 @@ export const normalizeTime = (time: TimeObject): TimeObject => {
 
 export interface DateTimeObject extends DateObject, TimeObject {}
 
-export type PartialDateTimeObject = Normalize<Partial<DateTimeObject> & Pick<DateTimeObject, "year">>;
+export type PartialDateTimeObject = Normalize<
+    Partial<DateTimeObject> & Pick<DateTimeObject, "year">
+>;
 
-const normalizedDateTimeFrom = (get: (key: keyof DateTimeObject) => number): DateTime => {
+const normalizedDateTimeFrom = (
+    get: (key: keyof DateTimeObject) => number,
+): DateTime => {
+    // prettier-ignore
     const time = normalizeTime({
         hour:        get("hour"),
         minute:      get("minute"),
         second:      get("second"),
         millisecond: get("millisecond"),
     });
+    // prettier-ignore
     const date = normalizeDate({
         day:   get("day") + Math.floor(time.hour / hoursInDay),
         month: get("month"),
@@ -79,6 +85,7 @@ const normalizedDateTimeFrom = (get: (key: keyof DateTimeObject) => number): Dat
     );
 };
 
+// prettier-ignore
 export type DateTimeTuple = [
     year:         number,
     month?:       number,
@@ -89,8 +96,14 @@ export type DateTimeTuple = [
     millisecond?: number,
 ];
 
-export type DateTimeLike = PartialDateTimeObject | DateTimeTuple | string | number | Date;
+export type DateTimeLike =
+    | PartialDateTimeObject
+    | DateTimeTuple
+    | string
+    | number
+    | Date;
 
+// prettier-ignore
 const dateTimeDefaults: DateTimeObject = {
     year:        NaN,
     month:       1,
@@ -106,16 +119,16 @@ export class DateTime implements DateTimeObject {
         return DateTime.from(Date.now());
     }
     static from(source: DateTimeLike): DateTime {
-        if(source instanceof DateTime) {
+        if (source instanceof DateTime) {
             return source;
         }
-        if(typeof source === "string" || typeof source === "number") {
+        if (typeof source === "string" || typeof source === "number") {
             source = new Date(source);
         }
-        if(source instanceof Date) {
+        if (source instanceof Date) {
             return DateTime.fromNativeDate(source);
         }
-        if(Array.isArray(source)) {
+        if (Array.isArray(source)) {
             source = {
                 year: source[0],
                 month: source[1],
@@ -140,9 +153,13 @@ export class DateTime implements DateTimeObject {
         );
     }
     static fromObject<T extends PartialDateTimeObject>(
-        dtObject: [unknown] extends [T extends DateTime ? unknown : never] ? never : T,
+        dtObject: [unknown] extends [T extends DateTime ? unknown : never]
+            ? never
+            : T,
     ) {
-        return normalizedDateTimeFrom(key => dtObject[key] ?? dateTimeDefaults[key]);
+        return normalizedDateTimeFrom(
+            key => dtObject[key] ?? dateTimeDefaults[key],
+        );
     }
     private constructor(
         readonly year: number,
@@ -200,29 +217,31 @@ export class DateTime implements DateTimeObject {
     minus(dur: Partial<DurationObject>): DateTime {
         return normalizedDateTimeFrom(key => this[key] - (dur[`${key}s`] ?? 0));
     }
-    startOf(key: Exclude<keyof DateTimeObject, "millisecond"> | "week"): DateTime {
+    startOf(
+        key: Exclude<keyof DateTimeObject, "millisecond"> | "week",
+    ): DateTime {
         const dt: Partial<DateTimeObject> = { millisecond: 0 };
-        if(key === "week") {
+        if (key === "week") {
             dt.day = this.day - weekday(this);
             key = "day";
         }
         block: {
-            if(key === "second") break block;
+            if (key === "second") break block;
             dt.second = 0;
-            if(key === "minute") break block;
+            if (key === "minute") break block;
             dt.minute = 0;
-            if(key === "hour") break block;
+            if (key === "hour") break block;
             dt.hour = 0;
-            if(key === "day") break block;
+            if (key === "day") break block;
             dt.day = 1;
-            if(key === "month") break block;
+            if (key === "month") break block;
             dt.month = 1;
         }
         return this.with(dt);
     }
     endOf(key: Exclude<keyof DateTimeObject, "millisecond"> | "week") {
         const start = this.startOf(key);
-        if(key === "week") {
+        if (key === "week") {
             return start.plus({ days: 7, milliseconds: -1 });
         } else {
             return start.plus({ [key + "s"]: 1, milliseconds: -1 });
@@ -230,19 +249,27 @@ export class DateTime implements DateTimeObject {
     }
 }
 
-export type WeekdayStringLong = `${typeof weekDayStringArray[number]}day`;
+export type WeekdayStringLong = `${(typeof weekDayStringArray)[number]}day`;
 export type WeekdayStringShort = Head3<WeekdayStringLong>;
 
-const weekDayStringArray = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"] as const;
+const weekDayStringArray = [
+    "Sun",
+    "Mon",
+    "Tues",
+    "Wednes",
+    "Thurs",
+    "Fri",
+    "Satur",
+] as const;
 
 export const weekdayString: {
     (date: DateObject, long: true): WeekdayStringLong;
     (date: DateObject, long?: false): WeekdayStringShort;
 } = (date: DateObject, long = false): never => {
     const base = weekDayStringArray[weekday(date)];
-    const result: WeekdayStringShort | WeekdayStringLong = (
-        long ? `${base}day` : base.slice(0, 3) as WeekdayStringShort
-    );
+    const result: WeekdayStringShort | WeekdayStringLong = long
+        ? `${base}day`
+        : (base.slice(0, 3) as WeekdayStringShort);
     return result as never;
 };
 
@@ -250,7 +277,7 @@ export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export const weekday = (date: DateObject): Weekday => {
     const dayFromUnixEpoc = date.year + leapDays(date.year - 1) + yearday(date);
-    return dayFromUnixEpoc % daysInWeek as Weekday;
+    return (dayFromUnixEpoc % daysInWeek) as Weekday;
 };
 
 export type WeeksInYear = 52 | 53;
@@ -265,7 +292,7 @@ export type DaysInYear = 365 | 366;
 export const daysInYearWithoutLeapDay = 365;
 
 export const daysInYear = (year: number): DaysInYear => {
-    return daysInYearWithoutLeapDay + +isLeapYear(year) as DaysInYear;
+    return (daysInYearWithoutLeapDay + +isLeapYear(year)) as DaysInYear;
 };
 
 export const yearday = (date: DateObject): number => {
@@ -274,10 +301,11 @@ export const yearday = (date: DateObject): number => {
     //   2 ならば 14
     //   それ以外ならば this.month
     // それに + 1 する
-    const m = (date.month + 9) % 12 + 4;
+    const m = ((date.month + 9) % 12) + 4;
     // fairfieldの公式
     // -64 === -122 + 31(1月の日数) + 28(2月の日数) - 1(dayが1から始まるため、1月1日を0とする調整)
-    const dayOfYearWithoutLeapDay = ((306 * m / 10 | 0) - 64 + date.day) % daysInYearWithoutLeapDay;
+    const dayOfYearWithoutLeapDay =
+        ((((306 * m) / 10) | 0) - 64 + date.day) % daysInYearWithoutLeapDay;
 
     const leapDay = +(date.month > 2 && isLeapYear(date.year));
     return dayOfYearWithoutLeapDay + leapDay;
@@ -288,27 +316,39 @@ export const isLeapYear = (year: number): boolean => {
 };
 
 export const leapDays = (year: number): number => {
-    return (year / 4 | 0) - (year / 100 | 0) + (year / 400 | 0);
+    return ((year / 4) | 0) - ((year / 100) | 0) + ((year / 400) | 0);
 };
 
 export type DaysInMonth = 28 | 29 | 30 | 31;
 
-const daysInMonthArray = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31] as const;
+const daysInMonthArray = [
+    31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
+] as const;
 
 export const daysInMonth = (year: number, month: number): DaysInMonth => {
     const leapDay = +(month === 2 && isLeapYear(year));
-    return daysInMonthArray[month - 1] + leapDay as DaysInMonth;
+    return (daysInMonthArray[month - 1] + leapDay) as DaysInMonth;
 };
 
 export const daysInWeek = 7;
 export const monthsInYear = 12;
 
-export type MonthStringLong = typeof monthStringArray[number];
+export type MonthStringLong = (typeof monthStringArray)[number];
 export type MonthStringShort = Head3<MonthStringLong>;
 
 const monthStringArray = [
-    "January", "February", "March", "April", "May", "June", "July",
-    "August", "September", "October", "November", "December",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
 ] as const;
 
 export const monthString: {
@@ -326,8 +366,7 @@ export const millisInSecond = 1000;
 
 // utils
 
-type Head3<T extends string> = (
+type Head3<T extends string> =
     T extends `${infer H1}${infer H2}${infer H3}${string}`
         ? `${H1}${H2}${H3}`
-    : never
-);
+        : never;

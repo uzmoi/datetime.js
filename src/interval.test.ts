@@ -13,6 +13,7 @@ import { DurationObject } from "./duration";
 import { Interval } from "./interval";
 
 describe("Interval", () => {
+    // prettier-ignore
     const plus: DurationObject = {
         years:        1,
         months:       2,
@@ -25,19 +26,24 @@ describe("Interval", () => {
     const start = DateTime.from("2022-11-07T01:23:45.678Z");
     test.each<DurationObject>([
         plus,
+        // prettier-ignore
         { years: 2, months: 1, days: 30, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 },
+        // prettier-ignore
         { years: 5, months: 2, days: 27, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 },
+        // prettier-ignore
         { years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 },
     ])("new %j", dur => {
         expect(new Interval(start, start.plus(dur))).toMatchObject(dur);
     });
     {
+        // prettier-ignore
         const expectedDays = plus.years * daysInYearWithoutLeapDay
             + daysInMonth(start.year + plus.years, start.month + 1)
             + daysInMonth(start.year + plus.years + 1, (start.month + 2) % monthsInYear);
         test.each([
-            ["years",  plus.years],
+            ["years", plus.years],
             ["months", plus.years * monthsInYear + plus.months],
+            // prettier-ignore
             ["milliseconds", ([
                 [1,               plus.days],
                 [hoursInDay,      plus.hours],
