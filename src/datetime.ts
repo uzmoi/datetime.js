@@ -1,4 +1,4 @@
-import { modulo, Nomalize } from "emnorst";
+import { modulo, Normalize } from "emnorst";
 import { DurationObject } from "./duration";
 import { dateToString, timeToString } from "./string";
 
@@ -53,7 +53,7 @@ export const normalizeTime = (time: TimeObject): TimeObject => {
 
 export interface DateTimeObject extends DateObject, TimeObject {}
 
-export type PartialDateTimeObject = Nomalize<Partial<DateTimeObject> & Pick<DateTimeObject, "year">>;
+export type PartialDateTimeObject = Normalize<Partial<DateTimeObject> & Pick<DateTimeObject, "year">>;
 
 const normalizedDateTimeFrom = (get: (key: keyof DateTimeObject) => number): DateTime => {
     const time = normalizeTime({

@@ -45,6 +45,6 @@
     "vitest": "^0.23.4"
   },
   "dependencies": {
-    "emnorst": "^0.6.0"
+    "emnorst": "^1.0.0-next.2"
   }
 }
