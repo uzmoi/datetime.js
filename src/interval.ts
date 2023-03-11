@@ -14,14 +14,22 @@ import {
 } from "./number";
 
 export class Interval implements DurationObject {
-    static from(start: DateTimeLike, end: DateTimeLike): Interval {
+    static from(this: void, start: DateTimeLike, end: DateTimeLike): Interval {
         return new Interval(DateTime.from(start), DateTime.from(end));
     }
-    static before(end: DateTimeLike, dur: Partial<DurationObject>): Interval {
+    static before(
+        this: void,
+        end: DateTimeLike,
+        dur: Partial<DurationObject>,
+    ): Interval {
         const endDt = DateTime.from(end);
         return new Interval(endDt.minus(dur), endDt);
     }
-    static after(start: DateTimeLike, dur: Partial<DurationObject>): Interval {
+    static after(
+        this: void,
+        start: DateTimeLike,
+        dur: Partial<DurationObject>,
+    ): Interval {
         const startDt = DateTime.from(start);
         return new Interval(startDt, startDt.plus(dur));
     }
@@ -68,7 +76,7 @@ export class Interval implements DurationObject {
         this.seconds      = time.second; // prettier-ignore
         this.milliseconds = time.millisecond; // prettier-ignore
     }
-    to(key: keyof DurationObject): number {
+    to(this: Interval, key: keyof DurationObject): number {
         if (key === "years") {
             return this.years;
         }
@@ -101,10 +109,10 @@ export class Interval implements DurationObject {
         }
         assert.unreachable<typeof key>();
     }
-    contains(dt: DateTime): boolean {
+    contains(this: Interval, dt: DateTime): boolean {
         return this.start <= dt && dt <= this.end;
     }
-    overlaps(i: Interval): boolean {
+    overlaps(this: Interval, i: Interval): boolean {
         return this.start <= i.end && i.start <= this.end;
     }
 }

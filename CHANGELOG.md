@@ -12,7 +12,8 @@
 ### Changed
 
 - Rename yearday to dayOfYear.
-- set sideEffects to false
+- Set sideEffects to false.
+- The type of "this" was made explicit.
 
 ## [0.1.0] - 2022-10-10
 
