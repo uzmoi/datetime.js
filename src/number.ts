@@ -51,6 +51,9 @@ export const dayOfYear = (date: DateObject): number => {
 
 export type DaysInMonth = 28 | 29 | 30 | 31;
 
+// (365 + 1/4) / 12
+export const daysInMonthAverage = 30.4375;
+
 const daysInMonthArray = [
     31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
 ] as const satisfies readonly DaysInMonth[];

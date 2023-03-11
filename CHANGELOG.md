@@ -7,6 +7,7 @@
 
 - fromNativeDate
 - fromObject
+- daysInMonthAverage
 
 ### Changed
 
