@@ -1,5 +1,5 @@
 import type { DateObject, TimeObject } from "./datetime";
-import { weekday } from "./number";
+import { minutesInHour, weekday } from "./number";
 
 const formatInt = (n: number, len: number) => String(n | 0).padStart(len, "0");
 
@@ -23,6 +23,17 @@ export const timeToString = (time: TimeObject): string => {
         "." +
         formatInt(time.millisecond, 3)
     );
+};
+
+export const offsetToString = (offset: number, z = true): string => {
+    if (z && offset === 0) {
+        return "Z";
+    }
+    const sign = offset > 0 ? "-" : "+";
+    const absOffset = Math.abs(offset);
+    const hour = formatInt((absOffset / minutesInHour) | 0, 2);
+    const minute = formatInt(absOffset % minutesInHour, 2);
+    return sign + hour + ":" + minute;
 };
 
 // Month

@@ -10,6 +10,7 @@
 - daysInMonthAverage
 - dateToString
 - timeToString
+- offsetToString
 
 ### Changed
 
