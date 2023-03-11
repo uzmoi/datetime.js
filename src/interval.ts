@@ -1,6 +1,6 @@
 import { assert, modulo } from "emnorst";
-import { DateTime, DateTimeLike, normalizeTime } from "./datetime";
-import { DurationObject } from "./duration";
+import { DateTime, normalizeTime, type DateTimeLike } from "./datetime";
+import type { DurationObject } from "./duration";
 import {
     dayOfYear,
     daysInMonth,

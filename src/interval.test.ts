@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { DateTime } from "./datetime";
-import { DurationObject } from "./duration";
+import type { DurationObject } from "./duration";
 import { Interval } from "./interval";
 import {
     daysInMonth,

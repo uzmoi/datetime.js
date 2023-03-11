@@ -1,5 +1,5 @@
-import { modulo, Normalize } from "emnorst";
-import { DurationObject } from "./duration";
+import { modulo, type Normalize } from "emnorst";
+import type { DurationObject } from "./duration";
 import {
     dayOfYear,
     daysInMonth,
@@ -9,18 +9,18 @@ import {
     minutesInHour,
     monthsInYear,
     secondsInMinute,
-    Weekday,
     weekday,
+    type Weekday,
 } from "./number";
 import {
     dateToString,
     monthString,
-    MonthStringLong,
-    MonthStringShort,
     timeToString,
     weekdayString,
-    WeekdayStringLong,
-    WeekdayStringShort,
+    type MonthStringLong,
+    type MonthStringShort,
+    type WeekdayStringLong,
+    type WeekdayStringShort,
 } from "./string";
 
 export interface DateObject {

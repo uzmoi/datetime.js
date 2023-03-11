@@ -1,4 +1,4 @@
-import { DateObject } from "./datetime";
+import type { DateObject } from "./datetime";
 
 // Leap
 
