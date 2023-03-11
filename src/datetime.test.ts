@@ -1,11 +1,6 @@
 import { describe, expect, test } from "vitest";
-import {
-    DateTime,
-    isLeapYear,
-    weekday,
-    weeksInYear,
-    dayOfYear,
-} from "./datetime";
+import { DateTime } from "./datetime";
+import { dayOfYear, isLeapYear, weekday, weeksInYear } from "./number";
 
 describe("DateTime", () => {
     test(".toString()", () => {

@@ -1,7 +1,8 @@
 import { assert, modulo } from "emnorst";
+import { DateTime, DateTimeLike, normalizeTime } from "./datetime";
+import { DurationObject } from "./duration";
 import {
-    DateTime,
-    DateTimeLike,
+    dayOfYear,
     daysInMonth,
     daysInYearWithoutLeapDay,
     hoursInDay,
@@ -9,11 +10,8 @@ import {
     millisInSecond,
     minutesInHour,
     monthsInYear,
-    normalizeTime,
     secondsInMinute,
-    dayOfYear,
-} from "./datetime";
-import { DurationObject } from "./duration";
+} from "./number";
 
 export class Interval implements DurationObject {
     static from(start: DateTimeLike, end: DateTimeLike): Interval {
