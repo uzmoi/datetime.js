@@ -3,9 +3,15 @@
 
 ## [Unreleased]
 
+### Added
+
+- fromNativeDate
+- fromObject
+
 ### Changed
 
 - Rename yearday to dayOfYear.
+- set sideEffects to false
 
 ## [0.1.0] - 2022-10-10
 
