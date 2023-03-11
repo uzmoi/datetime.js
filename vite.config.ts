@@ -8,7 +8,7 @@ export default defineConfig({
     },
     build: {
         lib: {
-            entry: "src/main.ts",
+            entry: "src/index.ts",
             fileName: "datetime",
             name: "rdt",
         },
