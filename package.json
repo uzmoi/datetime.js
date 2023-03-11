@@ -18,7 +18,6 @@
     "dist"
   ],
   "scripts": {
-    "dev": "vite",
     "build": "tsc && vite build",
     "test": "vitest",
     "coverage": "vitest run --coverage",
