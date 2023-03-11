@@ -113,15 +113,7 @@ export class DateTime implements DateTimeObject {
             source = new Date(source);
         }
         if(source instanceof Date) {
-            return new DateTime(
-                source.getUTCFullYear(),
-                source.getUTCMonth() + 1,
-                source.getUTCDate(),
-                source.getUTCHours(),
-                source.getUTCMinutes(),
-                source.getUTCSeconds(),
-                source.getUTCMilliseconds(),
-            );
+            return DateTime.fromNativeDate(source);
         }
         if(Array.isArray(source)) {
             source = {
@@ -134,8 +126,23 @@ export class DateTime implements DateTimeObject {
                 millisecond: source[6],
             };
         }
-        const obj = source;
-        return normalizedDateTimeFrom(key => obj[key] ?? dateTimeDefaults[key]);
+        return DateTime.fromObject(source);
+    }
+    static fromNativeDate(nativeDate: Date): DateTime {
+        return new DateTime(
+            nativeDate.getUTCFullYear(),
+            nativeDate.getUTCMonth() + 1,
+            nativeDate.getUTCDate(),
+            nativeDate.getUTCHours(),
+            nativeDate.getUTCMinutes(),
+            nativeDate.getUTCSeconds(),
+            nativeDate.getUTCMilliseconds(),
+        );
+    }
+    static fromObject<T extends PartialDateTimeObject>(
+        dtObject: [unknown] extends [T extends DateTime ? unknown : never] ? never : T,
+    ) {
+        return normalizedDateTimeFrom(key => dtObject[key] ?? dateTimeDefaults[key]);
     }
     private constructor(
         readonly year: number,
