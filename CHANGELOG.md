@@ -24,6 +24,10 @@
 - The type of "this" was made explicit.
 - weekStart in weeksInYear.
 
+### Fixed
+
+- weeksInYear
+
 ## [0.1.0] - 2022-10-10
 
 - `DateObject` type

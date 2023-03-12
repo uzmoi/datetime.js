@@ -23,8 +23,11 @@ export const weeksInYear = (
     year: number,
     weekStart: Weekday = 0,
 ): WeeksInYear => {
-    const weekday = modulo(year + leapDays(year - 1) - weekStart, daysInWeek);
-    return weekday === 0 || (weekday === 6 && isLeapYear(year)) ? 53 : 52;
+    const weekday = modulo(
+        year + leapDays(year - 1) - weekStart + 1,
+        daysInWeek,
+    );
+    return weekday === 0 && isLeapYear(year) ? 53 : 52;
 };
 
 /**

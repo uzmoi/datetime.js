@@ -11,29 +11,26 @@ import {
 } from "./number";
 
 test.each([
-    { year: 2017, leap: false, weekDay: 0 },
-    { year: 2018, leap: false, weekDay: 1 },
-    { year: 2022, leap: false, weekDay: 6 },
-    { year: 2012, leap: true, weekDay: 0 },
-    { year: 2024, leap: true, weekDay: 1 },
-    { year: 2028, leap: true, weekDay: 6 },
-    { year: 2023, leap: false, weekDay: 0, weekStart: 1 as const },
-    { year: 2028, leap: true, weekDay: 6, weekStart: 1 as const },
+    { leap: false, weekDay: 0 },
+    { leap: false, weekDay: 6 },
+    { leap: true, weekDay: 0 },
+    { leap: true, weekDay: 6 },
+    { leap: true, weekDay: 5, weekStart: 1 as const },
+    { leap: true, weekDay: 0, weekStart: 1 as const },
 ])(
-    "weeksInYear($year) // leap=$leap, weekday=$weekDay, weekStart=$weekStart",
-    ({ year, leap, weekDay, weekStart }) => {
-        expect(isLeapYear(year)).toBe(leap);
-        expect(weekday({ year, month: 1, day: 1 })).toBe(weekDay);
-        let expectWeeksInYear = 0;
-        for (
-            let x = DateTime.from([year]);
-            x.year === year;
-            x = x.plus({ days: 1 })
+    "weeksInYear / leap=$leap, weekday=$weekDay, weekStart=$weekStart",
+    ({ leap, weekDay, weekStart }) => {
+        let year = 2000;
+        while (
+            isLeapYear(year) !== leap ||
+            weekday({ year, month: 1, day: 1 }) !== weekDay
         ) {
-            if (weekday(x) === weekStart) {
-                expectWeeksInYear++;
-            }
+            year++;
         }
+        const expectWeeksInYear = weekOfYear(
+            DateTime.from([year]).endOf("year"),
+            weekStart,
+        );
         expect(weeksInYear(year, weekStart)).toBe(expectWeeksInYear);
     },
 );
