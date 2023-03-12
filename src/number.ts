@@ -23,6 +23,27 @@ export const weeksInYear = (year: number): WeeksInYear => {
     return weekday === 0 || (weekday === 6 && isLeapYear(year)) ? 53 : 52;
 };
 
+export type WeeksInMonth = 4 | 5 | 6;
+
+export const weeksInMonth = (year: number, month: number): WeeksInMonth => {
+    return weekOfMonth({
+        year,
+        month,
+        day: daysInMonth(year, month),
+    }) as WeeksInMonth;
+};
+
+export type WeekOfMonth = 1 | 2 | 3 | 4 | 5 | 6;
+
+export const weekOfMonth = (date: DateObject): WeekOfMonth => {
+    const weekdayOffset = weekday({
+        year: date.year,
+        month: date.month,
+        day: 1,
+    });
+    return Math.ceil((weekdayOffset + date.day) / daysInWeek) as WeekOfMonth;
+};
+
 // Day
 
 export type DaysInYear = 365 | 366;

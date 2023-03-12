@@ -11,6 +11,10 @@
 - dateToString
 - timeToString
 - offsetToString
+- WeeksInMonth type
+- weeksInMonth
+- WeekOfMonth type
+- weekOfMonth
 
 ### Changed
 

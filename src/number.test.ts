@@ -1,6 +1,13 @@
-import { expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 import { DateTime } from "./datetime";
-import { dayOfYear, isLeapYear, weekday, weeksInYear } from "./number";
+import {
+    dayOfYear,
+    isLeapYear,
+    weekday,
+    weekOfMonth,
+    weeksInMonth,
+    weeksInYear,
+} from "./number";
 
 test.each([
     { year: 2017, leap: false, weekDay: 0 },
@@ -27,6 +34,35 @@ test.each([
         expect(weeksInYear(year)).toBe(expectWeeksInYear);
     },
 );
+
+test.each([
+    [2015, 2, 4],
+    [2016, 2, 5],
+    [2026, 2, 4],
+    [2023, 3, 5],
+    [2023, 4, 6],
+])("weeksInMonth(%i, %i) === %i", (year, month, expected) => {
+    expect(weeksInMonth(year, month)).toBe(expected);
+});
+
+describe("weekOfMonth", () => {
+    describe("1日に週が始まる場合", () => {
+        test("7日は1", () => {
+            expect(weekOfMonth({ year: 2023, month: 1, day: 7 })).toBe(1);
+        });
+        test("8日は2", () => {
+            expect(weekOfMonth({ year: 2023, month: 1, day: 8 })).toBe(2);
+        });
+    });
+    describe("2日に週が始まる場合", () => {
+        test("1日は1", () => {
+            expect(weekOfMonth({ year: 2023, month: 4, day: 1 })).toBe(1);
+        });
+        test("2日は2", () => {
+            expect(weekOfMonth({ year: 2023, month: 4, day: 2 })).toBe(2);
+        });
+    });
+});
 
 test.each(Array.from({ length: 12 }, (_, i) => DateTime.from([2022, i + 1])))(
     "dayOfYear('%s')",
