@@ -17,7 +17,7 @@ test.each([
     { year: 2024, leap: true, weekDay: 1 },
     { year: 2028, leap: true, weekDay: 6 },
 ])(
-    "weeksInYear($year) // leap=$leap, weekday=$weekday",
+    "weeksInYear($year) // leap=$leap, weekday=$weekDay",
     ({ year, leap, weekDay }) => {
         expect(isLeapYear(year)).toBe(leap);
         expect(weekday({ year, month: 1, day: 1 })).toBe(weekDay);
