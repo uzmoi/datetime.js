@@ -5,6 +5,7 @@ import {
     isLeapYear,
     weekday,
     weekOfMonth,
+    weekOfYear,
     weeksInMonth,
     weeksInYear,
 } from "./number";
@@ -34,6 +35,12 @@ test.each([
         expect(weeksInYear(year)).toBe(expectWeeksInYear);
     },
 );
+
+test("weekOfYear", () => {
+    expect(weekOfYear({ year: 2023, month: 1, day: 1 })).toBe(0);
+    expect(weekOfYear({ year: 2023, month: 1, day: 7 })).toBe(0);
+    expect(weekOfYear({ year: 2023, month: 1, day: 8 })).toBe(1);
+});
 
 test.each([
     [2015, 2, 4],

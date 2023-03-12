@@ -23,6 +23,14 @@ export const weeksInYear = (year: number): WeeksInYear => {
     return weekday === 0 || (weekday === 6 && isLeapYear(year)) ? 53 : 52;
 };
 
+/**
+ * @returns 1..53
+ */
+export const weekOfYear = (date: DateObject): number => {
+    const weekdayOffset = weekday({ year: date.year, month: 1, day: 1 });
+    return Math.floor((weekdayOffset + dayOfYear(date)) / daysInWeek);
+};
+
 export type WeeksInMonth = 4 | 5 | 6;
 
 export const weeksInMonth = (year: number, month: number): WeeksInMonth => {

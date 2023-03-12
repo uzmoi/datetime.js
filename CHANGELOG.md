@@ -15,6 +15,7 @@
 - weeksInMonth
 - WeekOfMonth type
 - weekOfMonth
+- weekOfYear
 
 ### Changed
 
