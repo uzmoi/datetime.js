@@ -22,6 +22,7 @@
 - Rename yearday to dayOfYear.
 - Set sideEffects to false.
 - The type of "this" was made explicit.
+- weekStart in weeksInYear.
 
 ## [0.1.0] - 2022-10-10
 

@@ -17,9 +17,11 @@ test.each([
     { year: 2012, leap: true, weekDay: 0 },
     { year: 2024, leap: true, weekDay: 1 },
     { year: 2028, leap: true, weekDay: 6 },
+    { year: 2023, leap: false, weekDay: 0, weekStart: 1 as const },
+    { year: 2028, leap: true, weekDay: 6, weekStart: 1 as const },
 ])(
-    "weeksInYear($year) // leap=$leap, weekday=$weekDay",
-    ({ year, leap, weekDay }) => {
+    "weeksInYear($year) // leap=$leap, weekday=$weekDay, weekStart=$weekStart",
+    ({ year, leap, weekDay, weekStart }) => {
         expect(isLeapYear(year)).toBe(leap);
         expect(weekday({ year, month: 1, day: 1 })).toBe(weekDay);
         let expectWeeksInYear = 0;
@@ -28,29 +30,39 @@ test.each([
             x.year === year;
             x = x.plus({ days: 1 })
         ) {
-            if (weekday(x) === 0) {
+            if (weekday(x) === weekStart) {
                 expectWeeksInYear++;
             }
         }
-        expect(weeksInYear(year)).toBe(expectWeeksInYear);
+        expect(weeksInYear(year, weekStart)).toBe(expectWeeksInYear);
     },
 );
 
-test("weekOfYear", () => {
-    expect(weekOfYear({ year: 2023, month: 1, day: 1 })).toBe(0);
-    expect(weekOfYear({ year: 2023, month: 1, day: 7 })).toBe(0);
-    expect(weekOfYear({ year: 2023, month: 1, day: 8 })).toBe(1);
+describe("weekOfYear", () => {
+    test("weekOfYear", () => {
+        expect(weekOfYear({ year: 2023, month: 1, day: 1 })).toBe(0);
+        expect(weekOfYear({ year: 2023, month: 1, day: 7 })).toBe(0);
+        expect(weekOfYear({ year: 2023, month: 1, day: 8 })).toBe(1);
+    });
+    test("weekStart", () => {
+        expect(weekOfYear({ year: 2023, month: 1, day: 2 }, 1)).toBe(1);
+    });
 });
 
 test.each([
-    [2015, 2, 4],
-    [2016, 2, 5],
-    [2026, 2, 4],
-    [2023, 3, 5],
-    [2023, 4, 6],
-])("weeksInMonth(%i, %i) === %i", (year, month, expected) => {
-    expect(weeksInMonth(year, month)).toBe(expected);
-});
+    { year: 2015, month: 2, weeks: 4 },
+    { year: 2016, month: 2, weeks: 5 },
+    { year: 2026, month: 2, weeks: 4 },
+    { year: 2023, month: 3, weeks: 5 },
+    { year: 2023, month: 4, weeks: 6 },
+    { year: 2023, month: 10, weeks: 5 },
+    { year: 2023, month: 10, weeks: 6, weekStart: 1 as const },
+])(
+    "weeksInMonth($year, $month, $weekStart) === $weeks",
+    ({ year, month, weeks: expected, weekStart }) => {
+        expect(weeksInMonth(year, month, weekStart)).toBe(expected);
+    },
+);
 
 describe("weekOfMonth", () => {
     describe("1日に週が始まる場合", () => {

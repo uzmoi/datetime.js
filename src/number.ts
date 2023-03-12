@@ -1,3 +1,4 @@
+import { modulo } from "emnorst";
 import type { DateObject } from "./datetime";
 
 // Leap
@@ -18,36 +19,50 @@ export const monthsInYear = 12;
 
 export type WeeksInYear = 52 | 53;
 
-export const weeksInYear = (year: number): WeeksInYear => {
-    const weekday = (year + leapDays(year - 1)) % daysInWeek;
+export const weeksInYear = (
+    year: number,
+    weekStart: Weekday = 0,
+): WeeksInYear => {
+    const weekday = modulo(year + leapDays(year - 1) - weekStart, daysInWeek);
     return weekday === 0 || (weekday === 6 && isLeapYear(year)) ? 53 : 52;
 };
 
 /**
  * @returns 1..53
  */
-export const weekOfYear = (date: DateObject): number => {
-    const weekdayOffset = weekday({ year: date.year, month: 1, day: 1 });
+export const weekOfYear = (
+    date: DateObject,
+    weekStart: Weekday = 0,
+): number => {
+    const weekdayOffset = weekday({
+        year: date.year,
+        month: 1,
+        day: 1 + daysInWeek - weekStart,
+    });
     return Math.floor((weekdayOffset + dayOfYear(date)) / daysInWeek);
 };
 
 export type WeeksInMonth = 4 | 5 | 6;
 
-export const weeksInMonth = (year: number, month: number): WeeksInMonth => {
-    return weekOfMonth({
-        year,
-        month,
-        day: daysInMonth(year, month),
-    }) as WeeksInMonth;
+export const weeksInMonth = (
+    year: number,
+    month: number,
+    weekStart: Weekday = 0,
+): WeeksInMonth => {
+    const day = daysInMonth(year, month);
+    return weekOfMonth({ year, month, day }, weekStart) as WeeksInMonth;
 };
 
 export type WeekOfMonth = 1 | 2 | 3 | 4 | 5 | 6;
 
-export const weekOfMonth = (date: DateObject): WeekOfMonth => {
+export const weekOfMonth = (
+    date: DateObject,
+    weekStart: Weekday = 0,
+): WeekOfMonth => {
     const weekdayOffset = weekday({
         year: date.year,
         month: date.month,
-        day: 1,
+        day: 1 + daysInWeek - weekStart,
     });
     return Math.ceil((weekdayOffset + date.day) / daysInWeek) as WeekOfMonth;
 };
