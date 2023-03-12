@@ -39,7 +39,7 @@ export const dayOfYear = (date: DateObject): number => {
     //   2 ならば 14
     //   それ以外ならば this.month
     // それに + 1 する
-    const m = ((date.month + 9) % 12) + 4;
+    const m = ((date.month + 9) % monthsInYear) + 4;
     // fairfieldの公式
     // -64 === -122 + 31(1月の日数) + 28(2月の日数) - 1(dayが1から始まるため、1月1日を0とする調整)
     const dayOfYearWithoutLeapDay =

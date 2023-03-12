@@ -3,6 +3,7 @@ import type { DurationObject } from "./duration";
 import {
     dayOfYear,
     daysInMonth,
+    daysInWeek,
     hoursInDay,
     isLeapYear,
     millisInSecond,
@@ -263,7 +264,7 @@ export class DateTime implements DateTimeObject {
     endOf(this: DateTime, key: DurationUnit): DateTime {
         const start = this.startOf(key);
         if (key === "week") {
-            return start.plus({ days: 7, milliseconds: -1 });
+            return start.plus({ days: daysInWeek, milliseconds: -1 });
         } else {
             return start.plus({ [key + "s"]: 1, milliseconds: -1 });
         }
