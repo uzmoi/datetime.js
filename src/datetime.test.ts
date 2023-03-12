@@ -7,6 +7,12 @@ describe("DateTime", () => {
         const dt = DateTime.from("2022-11-07T01:23:45.678Z");
         expect(dt.toString()).toBe("2022-11-07T01:23:45.678");
     });
+    test("JSON", () => {
+        const dt = DateTime.from("2022-11-07T01:23:45.678Z");
+        expect(JSON.stringify(dt)).toBe(
+            JSON.stringify("2022-11-07T01:23:45.678"),
+        );
+    });
     test("plus", () => {
         const dt = DateTime.from([2022]).plus({
             months: 10,

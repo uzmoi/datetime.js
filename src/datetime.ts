@@ -221,6 +221,9 @@ export class DateTime implements DateTimeObject {
     toString(this: this): string {
         return dateToString(this) + "T" + timeToString(this);
     }
+    toJSON(this: this): string {
+        return this.toString();
+    }
     valueOf(this: this): number {
         return Date.UTC(
             this.year,
