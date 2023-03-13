@@ -60,13 +60,16 @@ export interface TimeObject {
     millisecond: number;
 }
 
-export const normalizeTime = (time: TimeObject): TimeObject => {
+export const normalizeTime = (
+    time: TimeObject,
+): TimeObject & { day: number } => {
     const millisecond = time.millisecond;
     const second = time.second + Math.floor(millisecond / millisInSecond);
     const minute = time.minute + Math.floor(second / secondsInMinute);
     const hour = time.hour + Math.floor(minute / minutesInHour);
     return {
-        hour,
+        day: Math.floor(hour / hoursInDay),
+        hour: modulo(hour, hoursInDay),
         minute: modulo(minute, minutesInHour),
         second: modulo(second, secondsInMinute),
         millisecond: modulo(millisecond, millisInSecond),
@@ -87,7 +90,7 @@ const normalizedDateTimeFrom = (
     });
     // prettier-ignore
     const date = normalizeDate({
-        day:   get("day") + Math.floor(time.hour / hoursInDay),
+        day:   get("day") + time.day,
         month: get("month"),
         year:  get("year"),
     });
@@ -96,7 +99,7 @@ const normalizedDateTimeFrom = (
         date.year,
         date.month,
         date.day,
-        modulo(time.hour, hoursInDay),
+        time.hour,
         time.minute,
         time.second,
         time.millisecond,

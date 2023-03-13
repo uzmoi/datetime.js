@@ -1,4 +1,4 @@
-import { assert, modulo } from "emnorst";
+import { assert } from "emnorst";
 import { DateTime, normalizeTime, type DateTimeLike } from "./datetime";
 import type { DurationObject } from "./duration";
 import {
@@ -48,7 +48,7 @@ export class Interval implements DurationObject {
             second:      end.second      - start.second,
             millisecond: end.millisecond - start.millisecond,
         });
-        let days = end.day - start.day + Math.floor(time.hour / hoursInDay);
+        let days = end.day - start.day + time.day;
         let months =
             (end.year - start.year) * monthsInYear + end.month - start.month;
 
@@ -71,7 +71,7 @@ export class Interval implements DurationObject {
         this.years        = Math.floor(months / monthsInYear); // prettier-ignore
         this.months       = months % monthsInYear; // prettier-ignore
         this.days         = days; // prettier-ignore
-        this.hours        = modulo(time.hour, hoursInDay); // prettier-ignore
+        this.hours        = time.hour; // prettier-ignore
         this.minutes      = time.minute; // prettier-ignore
         this.seconds      = time.second; // prettier-ignore
         this.milliseconds = time.millisecond; // prettier-ignore
