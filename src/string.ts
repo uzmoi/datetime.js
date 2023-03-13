@@ -44,7 +44,7 @@ export const offsetToString = (
     const sign = offset > 0 ? "-" : "+";
     const absOffset = Math.abs(offset);
     const delim = format === "basic" ? "" : ":";
-    const hour = formatInt((absOffset / minutesInHour) | 0, 2);
+    const hour = formatInt(absOffset / minutesInHour, 2);
     const minute = formatInt(absOffset % minutesInHour, 2);
     return sign + hour + delim + minute;
 };
