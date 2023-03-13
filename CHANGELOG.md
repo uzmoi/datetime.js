@@ -23,6 +23,11 @@
 - Set sideEffects to false.
 - The type of "this" was made explicit.
 - weekStart in weeksInYear.
+- Set DateTime default year to 1970
+
+### Removed
+
+- Removed PartialDateTimeObject type. Use `Partial<DateTimeObject>` instead.
 
 ### Fixed
 

@@ -1,4 +1,4 @@
-import { modulo, type Normalize } from "emnorst";
+import { modulo } from "emnorst";
 import type { DurationObject } from "./duration";
 import {
     dayOfYear,
@@ -75,10 +75,6 @@ export const normalizeTime = (time: TimeObject): TimeObject => {
 
 export interface DateTimeObject extends DateObject, TimeObject {}
 
-export type PartialDateTimeObject = Normalize<
-    Partial<DateTimeObject> & Pick<DateTimeObject, "year">
->;
-
 const normalizedDateTimeFrom = (
     get: (key: keyof DateTimeObject) => number,
 ): DateTime => {
@@ -119,7 +115,7 @@ export type DateTimeTuple = [
 ];
 
 export type DateTimeLike =
-    | PartialDateTimeObject
+    | Partial<DateTimeObject>
     | DateTimeTuple
     | string
     | number
@@ -127,7 +123,7 @@ export type DateTimeLike =
 
 // prettier-ignore
 const dateTimeDefaults: DateTimeObject = {
-    year:        NaN,
+    year:        1970,
     month:       1,
     day:         1,
     hour:        0,
@@ -174,7 +170,7 @@ export class DateTime implements DateTimeObject {
             nativeDate.getUTCMilliseconds(),
         );
     }
-    static fromObject<T extends PartialDateTimeObject>(
+    static fromObject<T extends Partial<DateTimeObject>>(
         this: void,
         dtObject: [unknown] extends [T extends DateTime ? unknown : never]
             ? never

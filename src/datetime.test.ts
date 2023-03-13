@@ -3,6 +3,10 @@ import { DateTime } from "./datetime";
 import { isLeapYear } from "./number";
 
 describe("DateTime", () => {
+    test("default is unix epoch", () => {
+        const dt = DateTime.fromObject({});
+        expect(dt.toString() + "Z").toBe(new Date(0).toISOString());
+    });
     test(".toString()", () => {
         const dt = DateTime.from("2022-11-07T01:23:45.678Z");
         expect(dt.toString()).toBe("2022-11-07T01:23:45.678");
