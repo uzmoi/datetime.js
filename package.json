@@ -6,12 +6,12 @@
   "sideEffects": false,
   "main": "./dist/datetime.umd.js",
   "module": "./dist/datetime.js",
-  "types": "./dist/main.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/datetime.js",
       "require": "./dist/datetime.umd.js",
-      "types": "./dist/main.d.ts"
+      "types": "./dist/index.d.ts"
     }
   },
   "files": [
