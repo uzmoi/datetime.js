@@ -9,8 +9,8 @@
   "types": "./dist/main.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/datetime.umd.js",
       "import": "./dist/datetime.js",
+      "require": "./dist/datetime.umd.js",
       "types": "./dist/main.d.ts"
     }
   },
