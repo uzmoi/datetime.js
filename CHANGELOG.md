@@ -5,8 +5,9 @@
 
 ### Added
 
-- fromNativeDate
-- fromObject
+- DateTime.fromNativeDate
+- DateTime.fromObject
+- DateTime.fromMillis
 - daysInMonthAverage
 - dateToString
 - timeToString

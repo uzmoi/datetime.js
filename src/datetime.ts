@@ -143,7 +143,10 @@ export class DateTime implements DateTimeObject {
         if (source instanceof DateTime) {
             return source;
         }
-        if (typeof source === "string" || typeof source === "number") {
+        if (typeof source === "number") {
+            return DateTime.fromMillis(source);
+        }
+        if (typeof source === "string") {
             source = new Date(source);
         }
         if (source instanceof Date) {
@@ -172,6 +175,9 @@ export class DateTime implements DateTimeObject {
             nativeDate.getUTCSeconds(),
             nativeDate.getUTCMilliseconds(),
         );
+    }
+    static fromMillis(this: void, ms: number): DateTime {
+        return DateTime.fromObject({ millisecond: ms });
     }
     static fromObject<T extends Partial<DateTimeObject>>(
         this: void,
