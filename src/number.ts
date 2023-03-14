@@ -1,5 +1,6 @@
 import { modulo } from "emnorst";
 import type { DateObject } from "./datetime";
+import type { WeekdayStringShort } from "./string";
 
 // Leap
 
@@ -21,7 +22,7 @@ export type WeeksInYear = 52 | 53;
 
 export const weeksInYear = (
     year: number,
-    weekStart: Weekday = 0,
+    weekStart = weekStartDefault,
 ): WeeksInYear => {
     const weekday = modulo(
         year + leapDays(year - 1) - weekStart + 1,
@@ -35,7 +36,7 @@ export const weeksInYear = (
  */
 export const weekOfYear = (
     date: DateObject,
-    weekStart: Weekday = 0,
+    weekStart = weekStartDefault,
 ): number => {
     const weekdayOffset = weekday({
         year: date.year,
@@ -50,7 +51,7 @@ export type WeeksInMonth = 4 | 5 | 6;
 export const weeksInMonth = (
     year: number,
     month: number,
-    weekStart: Weekday = 0,
+    weekStart?: Weekday,
 ): WeeksInMonth => {
     const day = daysInMonth(year, month);
     return weekOfMonth({ year, month, day }, weekStart) as WeeksInMonth;
@@ -60,7 +61,7 @@ export type WeekOfMonth = 1 | 2 | 3 | 4 | 5 | 6;
 
 export const weekOfMonth = (
     date: DateObject,
-    weekStart: Weekday = 0,
+    weekStart = weekStartDefault,
 ): WeekOfMonth => {
     const weekdayOffset = weekday({
         year: date.year,
@@ -113,6 +114,18 @@ export const daysInMonth = (year: number, month: number): DaysInMonth => {
 export const daysInWeek = 7;
 
 export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+export const Weekday = {
+    Sun: 0, // Sunday
+    Mon: 1, // Monday
+    Tue: 2, // Tuesday
+    Wed: 3, // Wednesday
+    Thu: 4, // Thursday
+    Fri: 5, // Friday
+    Sat: 6, // Saturday
+} as const satisfies Record<WeekdayStringShort, Weekday>;
+
+const weekStartDefault: Weekday = Weekday.Sun;
 
 export const weekday = (date: DateObject): Weekday => {
     const dayFromUnixEpoch =

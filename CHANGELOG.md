@@ -16,6 +16,7 @@
 - WeekOfMonth type
 - weekOfMonth
 - weekOfYear
+- Weekday object
 
 ### Changed
 
