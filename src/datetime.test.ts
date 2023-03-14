@@ -3,6 +3,16 @@ import { DateTime } from "./datetime";
 import { isLeapYear } from "./number";
 
 describe("DateTime", () => {
+    test("from DateTime class", () => {
+        const dt = DateTime.now();
+        expect(DateTime.from(dt)).toBe(dt);
+    });
+    test("from millisecond", () => {
+        const date = new Date();
+        expect(DateTime.fromMillis(date.getTime())).toStrictEqual(
+            DateTime.fromNativeDate(date),
+        );
+    });
     test("default is unix epoch", () => {
         const dt = DateTime.fromObject({});
         expect(dt.toString() + "Z").toBe(new Date(0).toISOString());
