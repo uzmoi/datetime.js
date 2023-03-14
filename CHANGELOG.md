@@ -3,6 +3,8 @@
 
 ## [Unreleased]
 
+## [0.2.0] - 2023-03-14
+
 ### Added
 
 - DateTime.fromNativeDate
