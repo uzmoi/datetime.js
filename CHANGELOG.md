@@ -3,6 +3,12 @@
 
 ## [Unreleased]
 
+## [0.2.1] - 2023-03-14
+
+## Fixed
+
+- Fix "types" path in package.json.
+
 ## [0.2.0] - 2023-03-14
 
 ### Added
