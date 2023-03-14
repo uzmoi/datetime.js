@@ -1,6 +1,12 @@
 import { describe, expect, test } from "vitest";
 import type { DateObject, TimeObject } from "./datetime";
-import { dateToString, offsetToString, timeToString } from "./string";
+import { Weekday } from "./number";
+import {
+    dateToString,
+    offsetToString,
+    timeToString,
+    weekdayString,
+} from "./string";
 
 describe("dateToString", () => {
     test("basic", () => {
@@ -58,4 +64,8 @@ describe("offsetToString", () => {
     test("+0130", () => {
         expect(offsetToString(-90, true, "basic")).toBe("+0130");
     });
+});
+
+test("weekdayString", () => {
+    expect(weekdayString(Weekday.Mon)).toBe("Mon");
 });

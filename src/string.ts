@@ -1,5 +1,5 @@
 import type { DateObject, TimeObject } from "./datetime";
-import { minutesInHour, weekday } from "./number";
+import { minutesInHour, weekday, type Weekday } from "./number";
 
 const formatInt = (n: number, len: number) => String(n | 0).padStart(len, "0");
 
@@ -93,10 +93,11 @@ const weekDayStringArray = [
 ] as const;
 
 export const weekdayString: {
-    (date: DateObject, long: true): WeekdayStringLong;
-    (date: DateObject, long?: false): WeekdayStringShort;
-} = (date: DateObject, long = false): never => {
-    const base = weekDayStringArray[weekday(date)];
+    (date: Weekday | DateObject, long: true): WeekdayStringLong;
+    (date: Weekday | DateObject, long?: false): WeekdayStringShort;
+} = (date: Weekday | DateObject, long = false): never => {
+    const base =
+        weekDayStringArray[typeof date === "number" ? date : weekday(date)];
     const result: WeekdayStringShort | WeekdayStringLong = long
         ? `${base}day`
         : (base.slice(0, 3) as WeekdayStringShort);

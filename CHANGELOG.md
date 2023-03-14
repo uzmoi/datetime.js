@@ -27,6 +27,7 @@
 - weekStart in weeksInYear.
 - Set DateTime default year to 1970.
 - Add day to the normalizeTime result.
+- Allow Weekday type in argument of weekdayString.
 
 ### Removed
 
