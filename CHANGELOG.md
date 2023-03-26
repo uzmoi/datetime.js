@@ -3,9 +3,13 @@
 
 ## [Unreleased]
 
+### Added
+
+- formatInt
+
 ## [0.2.1] - 2023-03-14
 
-## Fixed
+### Fixed
 
 - Fix "types" path in package.json.
 

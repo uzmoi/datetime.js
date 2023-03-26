@@ -1,7 +1,8 @@
 import type { DateObject, TimeObject } from "./datetime";
 import { minutesInHour, weekday, type Weekday } from "./number";
 
-const formatInt = (n: number, len: number) => String(n | 0).padStart(len, "0");
+export const formatInt = (n: number, len: number) =>
+    String(n | 0).padStart(len, "0");
 
 export const dateToString = (
     date: DateObject,
