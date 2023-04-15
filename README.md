@@ -13,7 +13,7 @@ import { DateTime } from "@rizzzse/datetime";
 ```
 
 ```html
-<script src="https://unpkg.com/@rizzzse/datetime@0.2"></script>
+<script src="https://unpkg.com/@rizzzse/datetime@0.3"></script>
 <script>
     rdt.DateTime;
 </script>
