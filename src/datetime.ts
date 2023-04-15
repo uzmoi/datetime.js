@@ -108,7 +108,7 @@ const normalizedDateTimeFrom = (
 
 // prettier-ignore
 export type DateTimeTuple = [
-    year:         number,
+    year?:        number,
     month?:       number,
     day?:         number,
     hour?:        number,
