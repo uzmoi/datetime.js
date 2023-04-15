@@ -135,6 +135,16 @@ const dateTimeDefaults: DateTimeObject = {
     millisecond: 0,
 };
 
+export const dateTimeUnits = [
+    "year",
+    "month",
+    "day",
+    "hour",
+    "minute",
+    "second",
+    "millisecond",
+] as const satisfies readonly (keyof DateTimeObject)[];
+
 export class DateTime implements DateTimeObject {
     static now(this: void): DateTime {
         return DateTime.from(Date.now());
@@ -153,15 +163,7 @@ export class DateTime implements DateTimeObject {
             return DateTime.fromNativeDate(source);
         }
         if (Array.isArray(source)) {
-            source = {
-                year: source[0],
-                month: source[1],
-                day: source[2],
-                hour: source[3],
-                minute: source[4],
-                second: source[5],
-                millisecond: source[6],
-            };
+            return DateTime.fromTuple(source);
         }
         return DateTime.fromObject(source);
     }
@@ -178,6 +180,13 @@ export class DateTime implements DateTimeObject {
     }
     static fromMillis(this: void, ms: number): DateTime {
         return DateTime.fromObject({ millisecond: ms });
+    }
+    static fromTuple(this: void, tuple: DateTimeTuple): DateTime {
+        const dateTimeObject: Partial<DateTimeObject> = {};
+        dateTimeUnits.forEach((unit, i) => {
+            dateTimeObject[unit] = tuple[i];
+        });
+        return DateTime.fromObject(dateTimeObject);
     }
     static fromObject<T extends Partial<DateTimeObject>>(
         this: void,

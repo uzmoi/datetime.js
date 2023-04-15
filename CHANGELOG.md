@@ -6,6 +6,8 @@
 ### Added
 
 - formatInt
+- DateTime.fromTuple
+- dateTimeUnits
 
 ## Changed
 

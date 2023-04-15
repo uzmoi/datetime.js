@@ -7,6 +7,10 @@ describe("DateTime", () => {
         const dt = DateTime.now();
         expect(DateTime.from(dt)).toBe(dt);
     });
+    test("fromTuple", () => {
+        const dt = DateTime.fromTuple([2023, 4, 15, 22, 45, 12, 123]);
+        expect(dt.toString()).toBe("2023-04-15T22:45:12.123");
+    });
     test("from millisecond", () => {
         const date = new Date();
         expect(DateTime.fromMillis(date.getTime())).toStrictEqual(
