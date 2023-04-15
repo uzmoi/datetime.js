@@ -7,6 +7,10 @@
 
 - formatInt
 
+## Changed
+
+- Split umd module into cjs and iife. iife does not require emnorst.
+
 ## [0.2.1] - 2023-03-14
 
 ### Fixed

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@jest/globals";
 import { DateTime } from "./datetime";
 import type { DurationObject } from "./duration";
 import { Interval } from "./interval";
@@ -33,7 +33,7 @@ describe("Interval", () => {
         // prettier-ignore
         { years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 },
     ])("new %j", dur => {
-        expect(new Interval(start, start.plus(dur))).toMatchObject(dur);
+        expect(new Interval(start, start.plus(dur))).toMatchObject({ ...dur });
     });
     {
         // prettier-ignore
@@ -41,18 +41,18 @@ describe("Interval", () => {
             + daysInMonth(start.year + plus.years, start.month + 1)
             + daysInMonth(start.year + plus.years + 1, (start.month + 2) % monthsInYear);
         test.each([
-            ["years", plus.years],
-            ["months", plus.years * monthsInYear + plus.months],
+            ["years" as const, plus.years],
+            ["months" as const, plus.years * monthsInYear + plus.months],
             // prettier-ignore
-            ["milliseconds", ([
+            ["milliseconds" as const, ([
                 [1,               plus.days],
                 [hoursInDay,      plus.hours],
                 [minutesInHour,   plus.minutes],
                 [secondsInMinute, plus.seconds],
                 [millisInSecond,  plus.milliseconds],
             ] as const).reduce((prev, [rate, value]) => prev * rate + value, expectedDays)],
-            // ["weeks", Math.floor(expectedDays / daysInWeek)],
-        ] as const)(".to('%s')", (key, expected) => {
+            // ["weeks" as const, Math.floor(expectedDays / daysInWeek)],
+        ])(".to('%s')", (key, expected) => {
             const interval = new Interval(start, start.plus(plus));
             expect(interval.to(key)).toBe(expected);
         });

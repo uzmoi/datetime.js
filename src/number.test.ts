@@ -1,11 +1,11 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@jest/globals";
 import { DateTime } from "./datetime";
 import {
     dayOfYear,
     isLeapYear,
-    weekday,
     weekOfMonth,
     weekOfYear,
+    weekday,
     weeksInMonth,
     weeksInYear,
 } from "./number";

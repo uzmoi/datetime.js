@@ -9,6 +9,9 @@
     "cSpell.words": [
         "datetime",
         "emnorst",
-        "millis"
+        "millis",
+        "tsup",
+        "treeshake",
+        "iife",
     ],
 }
