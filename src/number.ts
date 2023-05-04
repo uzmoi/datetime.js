@@ -82,10 +82,10 @@ export const daysInYear = (year: number): DaysInYear => {
 };
 
 export const dayOfYear = (date: DateObject): number => {
-    // this.month が
+    // date.month が
     //   1 ならば 13
     //   2 ならば 14
-    //   それ以外ならば this.month
+    //   それ以外ならば date.month
     // それに + 1 する
     const m = ((date.month + 9) % monthsInYear) + 4;
     // fairfieldの公式
@@ -128,9 +128,8 @@ export const Weekday = {
 const weekStartDefault: Weekday = Weekday.Sun;
 
 export const weekday = (date: DateObject): Weekday => {
-    const dayFromUnixEpoch =
-        date.year + leapDays(date.year - 1) + dayOfYear(date);
-    return (dayFromUnixEpoch % daysInWeek) as Weekday;
+    const d = date.year + leapDays(date.year - 1) + dayOfYear(date);
+    return (d % daysInWeek) as Weekday;
 };
 
 // Time

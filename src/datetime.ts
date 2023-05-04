@@ -24,11 +24,11 @@ import {
     type WeekdayStringShort,
 } from "./string";
 
-export interface DateObject {
+export type DateObject = {
     year: number;
     month: number;
     day: number;
-}
+};
 
 export const normalizeDate = (date: DateObject): DateObject => {
     let day = date.day;
@@ -53,12 +53,12 @@ export const normalizeDate = (date: DateObject): DateObject => {
     return { day, month, year };
 };
 
-export interface TimeObject {
+export type TimeObject = {
     hour: number;
     minute: number;
     second: number;
     millisecond: number;
-}
+};
 
 export const normalizeTime = (
     time: TimeObject,
@@ -147,7 +147,7 @@ export const dateTimeUnits = [
 
 export class DateTime implements DateTimeObject {
     static now(this: void): DateTime {
-        return DateTime.from(Date.now());
+        return DateTime.fromMillis(Date.now());
     }
     static from(this: void, source: DateTimeLike): DateTime {
         if (source instanceof DateTime) {
