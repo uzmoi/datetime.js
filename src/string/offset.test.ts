@@ -1,24 +1,24 @@
 import { describe, expect, test } from "@jest/globals";
-import { offsetToString, parseOffset } from "./offset";
+import { formatOffset, parseOffset } from "./offset";
 
-describe("offsetToString", () => {
+describe("formatOffset", () => {
     test("Z", () => {
-        expect(offsetToString(0)).toBe("Z");
+        expect(formatOffset(0)).toBe("Z");
     });
     test("+00:00", () => {
-        expect(offsetToString(0, { neverUseZ: true })).toBe("+00:00");
+        expect(formatOffset(0, { neverUseZ: true })).toBe("+00:00");
     });
     test("-00:00", () => {
-        expect(offsetToString(-0)).toBe("-00:00");
+        expect(formatOffset(-0)).toBe("-00:00");
     });
     test("+01:30", () => {
-        expect(offsetToString(90)).toBe("+01:30");
+        expect(formatOffset(90)).toBe("+01:30");
     });
     test("-01:30", () => {
-        expect(offsetToString(-90)).toBe("-01:30");
+        expect(formatOffset(-90)).toBe("-01:30");
     });
     test("basic format", () => {
-        expect(offsetToString(90, { format: "basic" })).toBe("+0130");
+        expect(formatOffset(90, { format: "basic" })).toBe("+0130");
     });
 });
 

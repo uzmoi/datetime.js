@@ -6,6 +6,13 @@
 ### Added
 
 - parseOffset
+- OffsetParseOptions type
+- formatOffset
+- OffsetFormatOptions type
+
+### Removed
+
+- Removed offsetToString. Use formatOffset instead.
 
 ## [0.3.0] - 2023-04-15
 

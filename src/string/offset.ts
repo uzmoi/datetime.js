@@ -7,7 +7,7 @@ export type OffsetFormatOptions = {
     format?: "extended" | "basic";
 };
 
-export const offsetToString = (
+export const formatOffset = (
     offset: number,
     options?: OffsetFormatOptions,
 ): string => {
