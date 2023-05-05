@@ -3,6 +3,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- parseOffset
+
 ## [0.3.0] - 2023-04-15
 
 ### Added
