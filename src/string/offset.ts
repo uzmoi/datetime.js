@@ -3,6 +3,7 @@ import { formatInt } from "./util";
 
 export type OffsetFormatOptions = {
     neverUseZ?: boolean;
+    allowOmitMinutes?: boolean;
     /** @default "extended" */
     format?: "extended" | "basic";
 };
@@ -15,11 +16,17 @@ export const formatOffset = (
     if (!options?.neverUseZ && isPositiveZero) {
         return "Z";
     }
+
     const sign = isPositiveZero || offset > 0 ? "+" : "-";
     const absOffset = Math.abs(offset);
     const delim = options?.format === "basic" ? "" : ":";
     const hour = formatInt(absOffset / minutesInHour, 2);
     const minute = formatInt(absOffset % minutesInHour, 2);
+
+    if (options?.allowOmitMinutes && minute === "00") {
+        return sign + hour;
+    }
+
     return sign + hour + delim + minute;
 };
 

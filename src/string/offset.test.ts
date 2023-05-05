@@ -20,6 +20,9 @@ describe("formatOffset", () => {
     test("basic format", () => {
         expect(formatOffset(90, { format: "basic" })).toBe("+0130");
     });
+    test("omit minutes", () => {
+        expect(formatOffset(60, { allowOmitMinutes: true })).toBe("+01");
+    });
 });
 
 describe("parseOffset", () => {
