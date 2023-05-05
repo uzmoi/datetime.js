@@ -6,10 +6,11 @@ export const offsetToString = (
     z = true,
     format?: "extended" | "basic",
 ): string => {
-    if (z && offset === 0) {
+    const isPositiveZero = Object.is(offset, 0);
+    if (z && isPositiveZero) {
         return "Z";
     }
-    const sign = offset > 0 ? "-" : "+";
+    const sign = isPositiveZero || offset > 0 ? "+" : "-";
     const absOffset = Math.abs(offset);
     const delim = format === "basic" ? "" : ":";
     const hour = formatInt(absOffset / minutesInHour, 2);
@@ -53,8 +54,5 @@ export const parseOffset = (
         return null;
     }
 
-    return (
-        ((offset[0] === "+") === !/00:00/.test(offset) ? -1 : 1) *
-        (hour * minutesInHour + minute)
-    );
+    return (offset[0] === "+" ? 1 : -1) * (hour * minutesInHour + minute);
 };
