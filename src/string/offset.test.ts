@@ -6,7 +6,7 @@ describe("offsetToString", () => {
         expect(offsetToString(0)).toBe("Z");
     });
     test("+00:00", () => {
-        expect(offsetToString(0, false)).toBe("+00:00");
+        expect(offsetToString(0, { neverUseZ: true })).toBe("+00:00");
     });
     test("-00:00", () => {
         expect(offsetToString(-0)).toBe("-00:00");
@@ -18,7 +18,7 @@ describe("offsetToString", () => {
         expect(offsetToString(-90)).toBe("-01:30");
     });
     test("basic format", () => {
-        expect(offsetToString(90, true, "basic")).toBe("+0130");
+        expect(offsetToString(90, { format: "basic" })).toBe("+0130");
     });
 });
 

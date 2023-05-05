@@ -1,24 +1,29 @@
 import { hoursInDay, minutesInHour } from "../number";
 import { formatInt } from "./util";
 
+export type OffsetFormatOptions = {
+    neverUseZ?: boolean;
+    /** @default "extended" */
+    format?: "extended" | "basic";
+};
+
 export const offsetToString = (
     offset: number,
-    z = true,
-    format?: "extended" | "basic",
+    options?: OffsetFormatOptions,
 ): string => {
     const isPositiveZero = Object.is(offset, 0);
-    if (z && isPositiveZero) {
+    if (!options?.neverUseZ && isPositiveZero) {
         return "Z";
     }
     const sign = isPositiveZero || offset > 0 ? "+" : "-";
     const absOffset = Math.abs(offset);
-    const delim = format === "basic" ? "" : ":";
+    const delim = options?.format === "basic" ? "" : ":";
     const hour = formatInt(absOffset / minutesInHour, 2);
     const minute = formatInt(absOffset % minutesInHour, 2);
     return sign + hour + delim + minute;
 };
 
-export type ParseOffsetOptions = {
+export type OffsetParseOptions = {
     allowLowerCase?: boolean;
     alwaysExtended?: boolean;
 };
@@ -27,7 +32,7 @@ const OffsetRegex = /^[+-](\d\d)(?::?(\d\d))?$/;
 
 export const parseOffset = (
     offset: string,
-    options?: ParseOffsetOptions,
+    options?: OffsetParseOptions,
 ): number | null => {
     if (offset === "Z" || (options?.allowLowerCase && offset === "z")) {
         return 0;
