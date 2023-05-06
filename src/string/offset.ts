@@ -4,6 +4,7 @@ import { formatInt } from "./util";
 export type OffsetFormatOptions = {
     neverUseZ?: boolean;
     allowOmitMinutes?: boolean;
+    ignoreNegativeZero?: boolean;
     /** @default "extended" */
     format?: "extended" | "basic";
 };
@@ -12,12 +13,15 @@ export const formatOffset = (
     offset: number,
     options?: OffsetFormatOptions,
 ): string => {
-    const isPositiveZero = Object.is(offset, 0);
-    if (!options?.neverUseZ && isPositiveZero) {
+    const isZero = options?.ignoreNegativeZero
+        ? offset === 0
+        : Object.is(offset, 0);
+
+    if (!options?.neverUseZ && isZero) {
         return "Z";
     }
 
-    const sign = isPositiveZero || offset > 0 ? "+" : "-";
+    const sign = isZero || offset > 0 ? "+" : "-";
     const absOffset = Math.abs(offset);
     const delim = options?.format === "basic" ? "" : ":";
     const hour = formatInt(absOffset / minutesInHour, 2);
@@ -32,6 +36,7 @@ export const formatOffset = (
 
 export type OffsetParseOptions = {
     allowLowerCase?: boolean;
+    alwaysFull?: boolean;
     alwaysExtended?: boolean;
 };
 
@@ -52,7 +57,10 @@ export const parseOffset = (
     }
 
     const matchResult = OffsetRegex.exec(offset);
-    if (matchResult == null) {
+    if (
+        matchResult == null ||
+        (options?.alwaysFull && matchResult[2] == null)
+    ) {
         return null;
     }
 

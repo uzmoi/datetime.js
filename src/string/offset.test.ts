@@ -11,6 +11,9 @@ describe("formatOffset", () => {
     test("-00:00", () => {
         expect(formatOffset(-0)).toBe("-00:00");
     });
+    test("-00:00 (ignoreNegativeZero: true)", () => {
+        expect(formatOffset(-0, { ignoreNegativeZero: true })).toBe("Z");
+    });
     test("+01:30", () => {
         expect(formatOffset(90)).toBe("+01:30");
     });
@@ -57,6 +60,9 @@ describe("parseOffset", () => {
     });
     test("omit minutes", () => {
         expect(parseOffset("+01")).toBe(60);
+    });
+    test("omit minutes (alwaysFull: true)", () => {
+        expect(parseOffset("+01", { alwaysFull: true })).toBeNull();
     });
     test("invalid minutes", () => {
         expect(parseOffset("+00:60")).toBeNull();
