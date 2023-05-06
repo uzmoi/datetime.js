@@ -77,6 +77,9 @@ export type DaysInYear = 365 | 366;
 
 export const daysInYearWithoutLeapDay = 365;
 
+// daysInYearWithoutLeapDay + 1/4 - 1/100 + 1/400
+export const daysInYearAverage = 365.2425;
+
 export const daysInYear = (year: number): DaysInYear => {
     return (daysInYearWithoutLeapDay + +isLeapYear(year)) as DaysInYear;
 };
@@ -99,7 +102,7 @@ export const dayOfYear = (date: DateObject): number => {
 
 export type DaysInMonth = 28 | 29 | 30 | 31;
 
-// (365 + 1/4 - 1/100 + 1/400) / 12
+// daysInYearAverage / 12
 export const daysInMonthAverage = 30.436875;
 
 const daysInMonthArray = [

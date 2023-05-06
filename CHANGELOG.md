@@ -9,6 +9,7 @@
 - OffsetParseOptions type
 - formatOffset
 - OffsetFormatOptions type
+- daysInYearAverage
 
 ### Removed
 
