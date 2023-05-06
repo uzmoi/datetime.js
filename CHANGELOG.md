@@ -10,6 +10,7 @@
 - formatOffset
 - OffsetFormatOptions type
 - daysInYearAverage
+- daysBetween
 
 ## Changed
 

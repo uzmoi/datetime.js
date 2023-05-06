@@ -2,16 +2,14 @@ import { assert } from "emnorst";
 import { DateTime, normalizeTime, type DateTimeLike } from "./datetime";
 import type { DurationObject } from "./duration";
 import {
-    dayOfYear,
     daysInMonth,
-    daysInYearWithoutLeapDay,
     hoursInDay,
-    leapDays,
     millisInSecond,
     minutesInHour,
     monthsInYear,
     secondsInMinute,
 } from "./number";
+import { daysBetween } from "./relative";
 
 export class Interval implements DurationObject {
     static from(this: void, start: DateTimeLike, end: DateTimeLike): Interval {
@@ -83,12 +81,7 @@ export class Interval implements DurationObject {
         if (key === "months") {
             return this.years * monthsInYear + this.months;
         }
-        const days =
-            (this.end.year - this.start.year) * daysInYearWithoutLeapDay +
-            leapDays(this.end.year) -
-            leapDays(this.start.year) +
-            dayOfYear(this.end) -
-            dayOfYear(this.start);
+        const days = daysBetween(this.start, this.end);
         if (key === "days") {
             return days;
         }
