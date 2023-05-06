@@ -53,11 +53,11 @@ const monthStringArray = [
 ] as const;
 
 export const monthString: {
-    (month: number, long: true): MonthStringLong;
-    (month: number, long?: false): MonthStringShort;
-} = (month: number, long = false): never => {
+    (month: number, format: "long"): MonthStringLong;
+    (month: number, format?: "short"): MonthStringShort;
+} = (month: number, format): never => {
     const longString = monthStringArray[month - 1];
-    return (long ? longString : longString.slice(0, 3)) as never;
+    return (format === "long" ? longString : longString.slice(0, 3)) as never;
 };
 
 // Weekday
@@ -76,14 +76,15 @@ const weekDayStringArray = [
 ] as const;
 
 export const weekdayString: {
-    (date: Weekday | DateObject, long: true): WeekdayStringLong;
-    (date: Weekday | DateObject, long?: false): WeekdayStringShort;
-} = (date: Weekday | DateObject, long = false): never => {
+    (date: Weekday | DateObject, format: "long"): WeekdayStringLong;
+    (date: Weekday | DateObject, format?: "short"): WeekdayStringShort;
+} = (date: Weekday | DateObject, format): never => {
     const base =
         weekDayStringArray[typeof date === "number" ? date : weekday(date)];
-    const result: WeekdayStringShort | WeekdayStringLong = long
-        ? `${base}day`
-        : (base.slice(0, 3) as WeekdayStringShort);
+    const result: WeekdayStringShort | WeekdayStringLong =
+        format === "long"
+            ? `${base}day`
+            : (base.slice(0, 3) as WeekdayStringShort);
     return result as never;
 };
 

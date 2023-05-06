@@ -214,13 +214,13 @@ export class DateTime implements DateTimeObject {
         return monthString(this.month);
     }
     get monthStringLong(): MonthStringLong {
-        return monthString(this.month, true);
+        return monthString(this.month, "long");
     }
     get weekdayStringShort(): WeekdayStringShort {
         return weekdayString(this);
     }
     get weekdayStringLong(): WeekdayStringLong {
-        return weekdayString(this, true);
+        return weekdayString(this, "long");
     }
     get weekday(): Weekday {
         return weekday(this);

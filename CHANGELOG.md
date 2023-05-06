@@ -11,6 +11,10 @@
 - OffsetFormatOptions type
 - daysInYearAverage
 
+## Changed
+
+- Change monthString and weekdayString option.
+
 ### Removed
 
 - Removed offsetToString. Use formatOffset instead.
